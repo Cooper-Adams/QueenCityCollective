@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen City Collective</title>
+</head>
+<body>
+    <nav>
+        <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+        
+        <ul class="nav-links"> 
+            <a href="/Panthers">Panthers</a>
+            <a href="/Hornets">Hornets</a>
+            <a href="/CharlotteFC">Charlotte FC</a>
+            <a href="pages/LogIn">Log In</a>
+        </ul>
+        
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="body-content">
+            <div class="article-card">
+                <img style="margin-bottom: -5px;" class="card-img" src="<%= articles[0].image %>">
+                <div class="article-info-box">
+                    <div class="card-title"><%= articles[0].title %></div>
+                    <div class="card-desc"><%= articles[0].description %></div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <img style="margin-bottom: -5px;" class="card-img" src="<%= articles[0].image %>">
+                <div class="article-info-box">
+                    <div class="card-title"><%= articles[0].title %></div>
+                    <div class="card-desc"><%= articles[0].description %></div>
+                </div>
+            </div>
+
+            <div class="article-card">
+                <img style="margin-bottom: -5px;" class="card-img" src="<%= articles[0].image %>">
+                <div class="article-info-box">
+                    <div class="card-title"><%= articles[0].title %></div>
+                    <div class="card-desc"><%= articles[0].description %></div>
+                </div>
+            </div>
+        </div>
+    
+        <footer class="footer">
+            <div class="big-img">
+                <img src="Logos/QCC Transparent.png" alt="Queen City Collective Logo" draggable="false">
+            </div>
+        
+            <div class="footer-socials">
+                <span>Socials</span>
+
+                <div class="footer-linkbox">
+                    <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/spotify.png"></a>
+                    <a href="https://twitter.com/TheQCCollective" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/twitter.png"></a>
+                </div>
+            </div>
+
+            <div class="official-socials">
+                <span>Official Sites</span>
+
+                <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer">Panthers</a>
+                <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer">Hornets</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

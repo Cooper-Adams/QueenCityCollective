@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="text/javascript" src="/functions.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen City Collective</title>
+</head>
+<body>
+    <nav>
+        <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+        
+        <ul class="nav-links"> 
+            <a href="/Panthers">Panthers</a>
+            <a href="/Hornets">Hornets</a>
+            <a href="/CharlotteFC">Charlotte FC</a>
+            <a href="pages/LogIn">Log In</a>
+        </ul>
+        
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <div class="container">    
+        <div class="body-content">
+            <section class="slider-wrapper">
+                <ul class="slides-container" id="slides-container">
+                    <% for (let i = 0; i < 3; ++i) { %>
+                        <% if (articles[i].category == "Hornets") { %>
+                            <li class="slide hornetBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
+                        <% } else if (articles[i].category == "Panthers") { %>
+                            <li class="slide pantherBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
+                        <% } else if (articles[i].category == "CharlotteFC") { %>
+                            <li class="slide cltfcBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
+                        <% } %>
+                            <div class="article-info-box">
+                                <div class="card-title"><%= articles[i].title %></div>
+                                <div class="card-desc"><%= articles[i].description %></div>
+
+                                <a class="article-link" href="/<%= articles[i].objectID%>">Continue Reading &#8594</a>
+
+                                <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
+                                <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
+                            </div>                        
+                        </li>
+                    <% } %>
+                </ul>
+            </section>
+        
+            <div class="news-box">
+                <h3>Headlines</h3>
+
+                <% for (let i = 3; i < 12; i++) { %>
+                    <a href="/" class="headline-title"><%= articles[0].title %></a>
+                <% } %>
+            </div>
+        </div>
+    
+        <footer class="footer">
+            <div class="big-img">
+                <img src="Logos/QCC Transparent.png" alt="Queen City Collective Logo" draggable="false">
+            </div>
+        
+            <div class="footer-socials">
+                <span>Socials</span>
+
+                <div class="footer-linkbox">
+                    <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/spotify.png"></a>
+                    <a href="https://twitter.com/TheQCCollective" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/twitter.png"></a>
+                </div>
+            </div>
+
+            <div class="official-socials">
+                <span>Official Sites</span>
+
+                <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer">Panthers</a>
+                <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer">Hornets</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
