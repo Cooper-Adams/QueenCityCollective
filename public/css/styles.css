@@ -26,7 +26,6 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
   padding: .75rem 1.5rem;
 }
 
@@ -53,7 +52,7 @@ nav img {
 }
 
 .nav-links a:hover {
-  color:#fff;
+  color: #fff !important;
   letter-spacing: 5px;
 }
 
@@ -177,6 +176,17 @@ nav img {
   padding: 20px 0;
 }
 
+.article-link {
+  color: #333;
+  text-decoration: none;
+  position: absolute;
+  bottom: 30%;
+}
+
+.article-link:hover {
+  color: #0085CA;
+}
+
 .news-box {
   display: flex;
   flex-direction: column;
@@ -211,6 +221,7 @@ nav img {
   align-items: center;
   background-color: black;
   padding: 10px 40px;
+  position: relative;
 }
 
 .footer span {
@@ -312,6 +323,7 @@ nav img {
  
   .burger {
     display: block;
+    cursor: pointer;
   }
 
   .body-content {
@@ -391,4 +403,9 @@ nav img {
 .nav-active {
   transform: translateX(0);
   background-color: black;
+}
+
+.hornets {
+  background-color: #1D1160;
+  color: #00788C !important;
 }

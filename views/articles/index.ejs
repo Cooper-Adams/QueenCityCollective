@@ -29,7 +29,7 @@
         <div class="body-content">
             <section class="slider-wrapper">
                 <ul class="slides-container" id="slides-container">
-                    <% for (let i = 0; i < 3; ++i) { %>
+                    <% for (let i = 0; i < 4; ++i) { %>
                         <% if (articles[i].category == "Hornets") { %>
                             <li class="slide hornetBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
                         <% } else if (articles[i].category == "Panthers") { %>
@@ -41,7 +41,7 @@
                                 <div class="card-title"><%= articles[i].title %></div>
                                 <div class="card-desc"><%= articles[i].description %></div>
 
-                                <a class="article-link" href="/<%= articles[i].objectID%>">Continue Reading &#8594</a>
+                                <a class="article-link" href="/<%= articles[i].objectID %>">Continue Reading &#8594</a>
 
                                 <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
                                 <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
@@ -79,6 +79,7 @@
 
                 <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer">Panthers</a>
                 <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer">Hornets</a>
+                <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer">Charlotte FC</a>
             </div>
         </footer>
     </div>
