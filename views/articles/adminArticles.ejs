@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Articles</title>
+</head>
+<body>
+    <nav>
+        <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+    </nav>
+
+    <div class="article-div">
+        <% for (let i = 0; i < articles.length; ++i) { %>
+            <div class="article-long">
+                <% if (articles[i].category == "Hornets") { %>
+                    <img src="../Logos/Hornets.png" style="width: 100px; height: 100px">
+                <% } else if (articles[i].category == "Panthers") { %>
+                    <img src="../Logos/Panthers.png" style="width: 100px; height: 100px">
+                <% } else if (articles[i].category == "CharlotteFC") { %>
+                    <img src="../Logos/CharlotteFC.png" style="width: 100px; height: 100px">
+                <% } %>
+
+                <h3><%= articles[i].title %></h3>
+
+                <span><%= articles[i].author %></span>
+
+                <span><%= articles[i].createdAt.toLocaleDateString() %></span>
+
+                <div class="change-btns">
+                    <% if (articles[i].published == "false") { %>
+                        <button>Publish</button>
+                    <% } %>
+    
+                    <button>Edit</button>
+    
+                    <button>Delete</button>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

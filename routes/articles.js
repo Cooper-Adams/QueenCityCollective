@@ -14,6 +14,12 @@ router.get('/new', (req, res) => {
     res.render('articles/new', { article: new Article()})
 })
 
+router.get('/adminArticles', async (req, res) => {
+    const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
+
+    res.render('articles/adminArticles', {articles: articles})
+})
+
 router.get('/:id', async (req, res) => 
 {
     try {

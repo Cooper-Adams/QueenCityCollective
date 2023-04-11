@@ -70,7 +70,7 @@ app.get('/Hornets', async(req, res) => {
 });
 
 //Charlotte FC Route
-app.get('CharlotteFC', async(req, res) => {
+app.get('/CharlotteFC', async(req, res) => {
     const client = new MongoClient(url)
 
     try {
