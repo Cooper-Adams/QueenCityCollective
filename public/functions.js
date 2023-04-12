@@ -53,7 +53,15 @@ const nav = document.querySelector(".nav-links");
 const navLinks = document.querySelectorAll(".nav-links a");
 
 burger.addEventListener("click", () => {
-  nav.classList.toggle("nav-active");
+  if (burger.classList.contains("hornets"))
+  {
+    nav.classList.toggle("nav-active");
+    nav.classList.toggle("hornets");
+  }
+  
+  else {
+    nav.classList.toggle("nav-active");
+  }
 
   navLinks.forEach((link, index) => {
     if (link.style.animation) 
