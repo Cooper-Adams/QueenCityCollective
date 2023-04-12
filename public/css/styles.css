@@ -405,7 +405,16 @@ nav img {
   background-color: black;
 }
 
+/* Hornets Pages color formatting */
+.nav-active.hornets {
+  background-color: #00788C;
+}
+
+.burger.hornets div {
+  background: #1D1160;
+}
+
 .hornets {
-  background-color: #1D1160;
-  color: #00788C !important;
+  background-color: #00788C;
+  color: #1D1160 !important;
 }
