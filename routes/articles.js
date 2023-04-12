@@ -48,7 +48,8 @@ router.post('/', async (req, res) => {
         tags: req.body.tags,
         author: req.body.author,
         image: req.body.image,
-        category: req.body.category
+        category: req.body.category,
+        published: req.body.published
     })
     
     try {
