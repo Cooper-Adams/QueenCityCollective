@@ -28,38 +28,20 @@
     <div class="container">    
         <div class="body-content">
             <section class="slider-wrapper">
-                <button class="slide-arrow" id="slide-arrow-prev">&#8249;</button>
-                <button class="slide-arrow" id="slide-arrow-next">&#8250;</button>
-              
                 <ul class="slides-container" id="slides-container">
-                    <li class="slide" id="1">
-                        <img class="card-img" src="<%= articles[0].image %>">
-                        <div class="article-info-box">
-                            <div class="card-title"><%= articles[0].title %></div>
-                            <div class="card-desc"><%= articles[0].description %></div>
-                        </div>
-                    </li>
-                    <li class="slide" id="2">
-                        <img class="card-img" src="https://cdn.vox-cdn.com/thumbor/eipAxAhPn8CF6u5HbGS_z5JrjF4=/0x0:4045x2697/1200x800/filters:focal(1752x268:2398x914)/cdn.vox-cdn.com/uploads/chorus_image/image/66993665/usa_today_13347331.0.jpg">
-                        <div class="article-info-box">
-                            <div class="card-title"><%= articles[0].title %></div>
-                            <div class="card-desc"><%= articles[0].description %></div>
-                        </div>
-                    </li>
-                    <li class="slide" id="3">
-                        <img class="card-img" src="/Logos/Cam Example.jpg">
-                        <div class="article-info-box">
-                            <div class="card-title"><%= articles[0].title %></div>
-                            <div class="card-desc"><%= articles[0].description %></div>
-                        </div>
-                    </li>
-                    <li class="slide" id="4">
-                        <img class="card-img" src="/Logos/LJBB.jpg">
-                        <div class="article-info-box">
-                            <div class="card-title"><%= articles[0].title %></div>
-                            <div class="card-desc"><%= articles[0].description %></div>
-                        </div>
-                    </li>
+                    <% for (let i = 0; i < 3; ++i) { %>
+                        <li class="slide hornetsBG" id=<%= (i + 1) %> style="background-image: url(../Logos/Hornets.png);">
+                            <div class="article-info-box">
+                                <div class="card-title"><%= articles[i].title %></div>
+                                <div class="card-desc"><%= articles[i].description %></div>
+
+                                <a class="article-link" href="/<%= articles[i].objectID %>">Continue Reading &#8594</a>
+
+                                <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
+                                <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
+                            </div>                        
+                        </li>
+                    <% } %>
                 </ul>
             </section>
         
@@ -72,26 +54,26 @@
             </div>
         </div>
     
-        <footer class="footer hornets">
+        <footer class="footer">
             <div class="big-img">
                 <img src="Logos/QCC Transparent.png" alt="Queen City Collective Logo" draggable="false">
             </div>
         
-            <div class="footer-socials hornets">
-                <span class="hornets">Socials</span>
+            <div class="footer-socials">
+                <span>Socials</span>
 
-                <div class="footer-linkbox hornets">
+                <div class="footer-linkbox">
                     <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/spotify.png"></a>
                     <a href="https://twitter.com/TheQCCollective" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/twitter.png"></a>
                 </div>
             </div>
 
-            <div class="official-socials hornets">
-                <span class="hornets">Official Sites</span>
+            <div class="official-socials">
+                <span>Official Sites</span>
 
-                <a class="hornets" href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer">Panthers</a>
-                <a class="hornets" href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer">Hornets</a>
-                <a class="hornets" href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer">Charlotte FC</a>
+                <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer">Panthers</a>
+                <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer">Hornets</a>
+                <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer">Charlotte FC</a>
             </div>
         </footer>
     </div>
