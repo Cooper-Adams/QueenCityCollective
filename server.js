@@ -1,6 +1,6 @@
 const express = require('express')
 const articleRouter = require('./routes/articles')
-const {MongoClient} = require('mongodb')
+const {MongoClient, ObjectId} = require('mongodb')
 const app = express()
 
 var dotenv = require('dotenv').config()
@@ -31,11 +31,12 @@ app.get('/', async (req, res) => {
     }
 })
 
+//Hornets Route
 app.get('/Panthers', async(req, res) => {
     const client = new MongoClient(url)
 
     try {
-        // Retrieves the 12 most recent articles from the database and passes them to the index
+        // Retrieves the Panthers articles from the database
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Panthers"}).sort({createdAt: -1}).toArray();
 
         res.render('articles/Panthers', { articles: articles })
