@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/css/styles.css">
+    <script type="text/javascript" src="/functions.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen City Collective</title>
 </head>
@@ -24,30 +25,32 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container">    
         <div class="body-content">
-            <div class="article-card">
-                <img style="margin-bottom: -5px;" class="card-img" src="<%= articles[0].image %>">
-                <div class="article-info-box">
-                    <div class="card-title"><%= articles[0].title %></div>
-                    <div class="card-desc"><%= articles[0].description %></div>
-                </div>
-            </div>
+            <section class="slider-wrapper">
+                <ul class="slides-container" id="slides-container">
+                    <% for (let i = 0; i < 3; ++i) { %>
+                        <li class="slide pantherBG" id=<%= (i + 1) %> style="background-image: url(../Logos/Panthers.png);">
+                            <div class="article-info-box">
+                                <div class="card-title"><%= articles[i].title %></div>
+                                <div class="card-desc"><%= articles[i].description %></div>
 
-            <div class="article-card">
-                <img style="margin-bottom: -5px;" class="card-img" src="<%= articles[0].image %>">
-                <div class="article-info-box">
-                    <div class="card-title"><%= articles[0].title %></div>
-                    <div class="card-desc"><%= articles[0].description %></div>
-                </div>
-            </div>
+                                <a class="article-link" href="/<%= articles[i].objectID %>">Continue Reading &#8594</a>
 
-            <div class="article-card">
-                <img style="margin-bottom: -5px;" class="card-img" src="<%= articles[0].image %>">
-                <div class="article-info-box">
-                    <div class="card-title"><%= articles[0].title %></div>
-                    <div class="card-desc"><%= articles[0].description %></div>
-                </div>
+                                <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
+                                <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
+                            </div>                        
+                        </li>
+                    <% } %>
+                </ul>
+            </section>
+        
+            <div class="news-box">
+                <h3>Headlines</h3>
+
+                <% for (let i = 3; i < 12; i++) { %>
+                    <a href="/" class="headline-title"><%= articles[0].title %></a>
+                <% } %>
             </div>
         </div>
     
