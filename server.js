@@ -1,7 +1,20 @@
 const express = require('express')
+const app = express()
 const articleRouter = require('./routes/articles')
 const {MongoClient, ObjectId} = require('mongodb')
-const app = express()
+const bcrypt = require('bcrypt')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
+
+
+const initializePassport = require('./passport-config');
+
+initializePassport(
+    passport, 
+    email => users.find(user => user.email === email), //CHECK DATABASE FOR EMAIL
+    id => users.find(user => user.id === id) //CHECK DATABASE FOR EMAIL
+);
 
 var dotenv = require('dotenv').config()
 
@@ -11,6 +24,14 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.get('/', async (req, res) => {
     const client = new MongoClient(url)
@@ -31,7 +52,35 @@ app.get('/', async (req, res) => {
     }
 })
 
-//Hornets Route
+//Login route
+app.get('/login', checkNotAuthenticated, (req, res) => {
+    res.render('admin/login')
+});
+
+//Login redirection
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/admin/login',
+    failureFlash: true
+}))
+
+app.get('/register', checkNotAuthenticated, (req, res) => {
+    res.render('admin/register')
+})
+
+app.post('/register', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+        /* FINISH THIS, IT NEEDS TO PUT THE NEW USER IN THE DATABASE */
+
+        res.redirect('/')
+    } catch (e) {
+        res.redirect('/register')
+    }
+})
+
+//Panthers Route
 app.get('/Panthers', async(req, res) => {
     const client = new MongoClient(url)
 
@@ -89,10 +138,35 @@ app.get('/CharlotteFC', async(req, res) => {
     }
 });
 
+//Admin route, must be authenticated to access
+app.get('/adminArticles', checkAuthenticated, async (req, res) => {
+    const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
+
+    res.render('articles/adminArticles', {articles: articles})
+})
+
 app.use('/articles', articleRouter)
 
 app.use((req, res, next) => {
     res.status(404).send("Error 404: Content Not Found")
 })
+
+//Checks for authentication
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+
+    res.redirect('/login')
+}
+
+//Checks if user is not logged in
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+
+    next()
+}
 
 app.listen(5500);
