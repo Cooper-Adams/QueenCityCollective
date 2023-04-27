@@ -2,28 +2,32 @@ const express = require('express')
 const app = express()
 const articleRouter = require('./routes/articles')
 const {MongoClient, ObjectId} = require('mongodb')
+const UserModel = require('./models/userModel')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 
-
 const initializePassport = require('./passport-config');
-
-initializePassport(
-    passport, 
-    email => users.find(user => user.email === email), //CHECK DATABASE FOR EMAIL
-    id => users.find(user => user.id === id) //CHECK DATABASE FOR EMAIL
-);
+const { name } = require('ejs')
 
 var dotenv = require('dotenv').config()
 
 var url = process.env.MONGOLAB_URL
 
+const client = new MongoClient(url)
+
+initializePassport(
+    passport, 
+    async email => await client.db("QCC-DB").collection("Profiles").find({email: user.email}), //CHECK DATABASE FOR EMAIL
+    id => users.find(user => user.id === id) //CHECK DATABASE FOR EMAIL
+);
+
 app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
+
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -33,9 +37,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+//Index route
 app.get('/', async (req, res) => {
-    const client = new MongoClient(url)
-
     try {
         // Retrieves the 12 most recent articles from the database and passes them to the index
         const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray();
@@ -64,28 +67,39 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
+//Register route
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('admin/register')
 })
 
+//Register redirection
 app.post('/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        var newUser = new UserModel({
+            email: req.body.email,
+            password: req.body.password,
+            name: req.body.name
+        });
 
-        /* FINISH THIS, IT NEEDS TO PUT THE NEW USER IN THE DATABASE */
+        newUser.save(function(err) { if (err) throw err})
 
-        res.redirect('/')
-    } catch (e) {
+        await client.db("QCC-DB").collection("Profiles").insertOne(newUser);
+    } 
+    
+    catch (e) {
         res.redirect('/register')
+    }
+    
+    finally {
+        await client.close()
+        res.render('admin/login')
     }
 })
 
 //Panthers Route
 app.get('/Panthers', async(req, res) => {
-    const client = new MongoClient(url)
-
     try {
-        // Retrieves the Panthers articles from the database
+        //Retrieves the Panthers articles from the database
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Panthers"}).sort({createdAt: -1}).toArray();
 
         res.render('articles/Panthers', { articles: articles })
@@ -102,8 +116,6 @@ app.get('/Panthers', async(req, res) => {
 
 //Hornets Route
 app.get('/Hornets', async(req, res) => {
-    const client = new MongoClient(url)
-
     try {
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Hornets"}).sort({createdAt: -1}).toArray();
 
@@ -121,8 +133,6 @@ app.get('/Hornets', async(req, res) => {
 
 //Charlotte FC Route
 app.get('/CharlotteFC', async(req, res) => {
-    const client = new MongoClient(url)
-
     try {
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "CharlotteFC"}).sort({createdAt: -1}).toArray();
 
