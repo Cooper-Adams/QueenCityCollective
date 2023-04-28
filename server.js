@@ -3,25 +3,20 @@ const app = express()
 const articleRouter = require('./routes/articles')
 const {MongoClient, ObjectId} = require('mongodb')
 const UserModel = require('./models/userModel')
-const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 
 const initializePassport = require('./passport-config');
-const { name } = require('ejs')
 
 var dotenv = require('dotenv').config()
-
 var url = process.env.MONGOLAB_URL
 
-const client = new MongoClient(url)
-
-initializePassport(
-    passport, 
-    async email => await client.db("QCC-DB").collection("Profiles").find({email: user.email}), //CHECK DATABASE FOR EMAIL
-    id => users.find(user => user.id === id) //CHECK DATABASE FOR EMAIL
-);
+// initializePassport(
+//     passport, 
+//     //async email => await client.db("QCC-DB").collection("Profiles").find({email: user.email}), //CHECK DATABASE FOR EMAIL
+//     //id => users.find(user => user.id === id) //CHECK DATABASE FOR EMAIL
+// );
 
 app.set('view engine', 'ejs')
 
@@ -40,18 +35,15 @@ app.use(passport.session())
 //Index route
 app.get('/', async (req, res) => {
     try {
-        // Retrieves the 12 most recent articles from the database and passes them to the index
-        const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray();
+        const client = new MongoClient(url)
 
+        const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray();
+    
         res.render('articles/index', { articles: articles })
-    } 
-    
-    catch (e) {
-        console.error(e)
-    } 
-    
-    finally {
+
         await client.close()
+    } catch (e) {
+        console.error(e)
     }
 })
 
@@ -75,6 +67,8 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 //Register redirection
 app.post('/register', async (req, res) => {
     try {
+        const client = new MongoClient(url)
+
         var newUser = new UserModel({
             email: req.body.email,
             password: req.body.password,
@@ -84,14 +78,11 @@ app.post('/register', async (req, res) => {
         newUser.save(function(err) { if (err) throw err})
 
         await client.db("QCC-DB").collection("Profiles").insertOne(newUser);
-    } 
-    
-    catch (e) {
-        res.redirect('/register')
-    }
-    
-    finally {
+
         await client.close()
+    } catch (e) {
+        res.redirect('/register')
+    } finally {
         res.render('admin/login')
     }
 })
@@ -99,84 +90,81 @@ app.post('/register', async (req, res) => {
 //Panthers Route
 app.get('/Panthers', async(req, res) => {
     try {
-        //Retrieves the Panthers articles from the database
+        const client = new MongoClient(url)
+
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Panthers"}).sort({createdAt: -1}).toArray();
 
         res.render('articles/Panthers', { articles: articles })
-    } 
-    
-    catch (e) {
-        console.error(e)
-    } 
-    
-    finally {
+
         await client.close()
+    } catch (e) {
+        console.error(e)
     }
 });
 
 //Hornets Route
 app.get('/Hornets', async(req, res) => {
     try {
+        const client = new MongoClient(url)
+
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Hornets"}).sort({createdAt: -1}).toArray();
 
         res.render('articles/Hornets', { articles: articles })
-    } 
-    
-    catch (e) {
-        console.error(e)
-    } 
-    
-    finally {
+
         await client.close()
+    } catch (e) {
+        console.error(e)
     }
 });
 
 //Charlotte FC Route
 app.get('/CharlotteFC', async(req, res) => {
     try {
+        const client = new MongoClient(url)
+
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "CharlotteFC"}).sort({createdAt: -1}).toArray();
 
         res.render('articles/CharlotteFC', { articles: articles })
-    } 
-    
-    catch (e) {
-        console.error(e)
-    } 
-    
-    finally {
+
         await client.close()
+    } catch (e) {
+        console.error(e)
     }
 });
 
 //Admin route, must be authenticated to access
-app.get('/adminArticles', checkAuthenticated, async (req, res) => {
-    const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
+app.get('/adminArticles', async (req, res) => {
+    try {
+        const client = new MongoClient(url)
 
-    res.render('articles/adminArticles', {articles: articles})
-})
+        const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
 
-app.use('/articles', articleRouter)
+        res.render('articles/adminArticles', {articles: articles})
 
-app.use((req, res, next) => {
-    res.status(404).send("Error 404: Content Not Found")
+        await client.close()
+    } catch (e) {
+        console.error(e)
+    }
 })
 
 //Checks for authentication
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
-    }
-
-    res.redirect('/login')
+    } res.redirect('/login')
 }
 
 //Checks if user is not logged in
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/')
-    }
-
-    next()
+    } next()
 }
+
+app.use('/articles', articleRouter)
+
+app.use((req, res, next) => {
+    res.status(404).send("Error 404: Content Not Found")
+})
 
 app.listen(5500);
