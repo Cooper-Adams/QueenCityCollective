@@ -5,29 +5,20 @@ const { ObjectID } = require('bson')
 const router = express.Router()
 
 var dotenv = require('dotenv').config()
-
 var url = process.env.MONGOLAB_URL
-
-const client = new MongoClient(url)
-
-router.get('/new', (req, res) => {
-    res.render('articles/new', { article: new Article()})
-})
 
 router.get('/:id', async (req, res) => 
 {
     try {
-        //Identifies the article in the database
+        const client = new MongoClient(url)
+
         const article = await client.db("QCC-DB").collection("Articles").findOne({_id: ObjectID(req.params.id.trim())});
 
-        //Redirects home if the article isn't found
-        if (article == null)
-        {
-            res.redirect('/')
-        }
+        if (article == null) { res.redirect('/') }
 
-        //Render the article if found
         res.render('articles/show', {article: article})
+        
+        await client.close();
     } catch (e) {
         console.error(e)
     }
@@ -47,13 +38,14 @@ router.post('/', async (req, res) => {
     })
     
     try {
-        //Posts article to database
-        client.db("QCC-DB").collection("Articles").insertOne(article);
+        const client = new MongoClient(url)
 
-        //Redirects to new created article's page if save was succesful
+        await client.db("QCC-DB").collection("Articles").insertOne(article);
+
         res.redirect(`/articles/${article._id}`)
+
+        await client.close()
     } catch (e) {
-        //Passes article back if there is an error so fields can "auto-populate"
         console.error(e)
         res.render('articles/new', { article: article })
     }
