@@ -8,17 +8,19 @@
     <title><%= article.title %></title>
 </head>
 <body>
-    <nav>
-        <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+    <nav <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %>>
+        <a href="/" rel="noopener noreferrer">
+            <img src=<% if (article.category == "Hornets") { %> <%= "/Logos/Q-Cropped-Hornets.png" %> <% } else { %>
+                     <%= "/Logos/Q-Cropped-Panthers.png" %> <% } %> class="home-icon" draggable="false">
+        </a>
         
-        <ul class="nav-links"> 
-            <a href="articles/Panthers">Panthers</a>
-            <a href="articles/Hornets">Hornets</a>
-            <a href="articles/CharlotteFC">Charlotte FC</a>
-            <a href="pages/LogIn">Log In</a>
+        <ul class="nav-links">
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/Panthers">Panthers</a>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/Hornets">Hornets</a>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/CharlotteFC">Charlotte FC</a>
         </ul>
         
-        <div class="burger">
+        <div class="burger <% if (article.category == "Hornets") { %><%= "hornets" %><% } %>">
             <div class="line1"></div>
             <div class="line2"></div>
             <div class="line3"></div>
@@ -26,8 +28,6 @@
     </nav>
 
     <div class="container">
-        <img class="article-image" src="<%= article.image %>" alt="<%= article.alt-text %>">
-        <span class="article-image-credit"><%= article.img-cred %></span>
         <h1 class="article-title"><%= article.title %></h1>
         <div class="article-date"><%= article.createdAt.toLocaleDateString()%></div>
         <div class="article-text">
