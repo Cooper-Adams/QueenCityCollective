@@ -42,7 +42,13 @@ router.post('/', async (req, res) => {
 
         await client.db("QCC-DB").collection("Articles").insertOne(article);
 
-        res.redirect(`/articles/${article._id}`)
+        if (req.body.published) {
+            res.redirect(`/articles/${article._id}`)
+        }
+
+        else {
+            res.redirect('/admin/adminArticles')
+        }
 
         await client.close()
     } catch (e) {
