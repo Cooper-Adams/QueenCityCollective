@@ -3,6 +3,7 @@ const app = express()
 const articleRouter = require('./routes/articles')
 const {MongoClient, ObjectId} = require('mongodb')
 const UserModel = require('./models/userModel')
+const { ObjectID } = require('bson')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
@@ -139,9 +140,35 @@ app.get('/adminArticles', async (req, res) => {
 
         const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
 
-        res.render('articles/adminArticles', {articles: articles})
+        res.render('admin/adminArticles', {articles: articles})
 
         await client.close()
+    } catch (e) {
+        console.error(e)
+    }
+})
+
+//New (or Edit) Article route, must be authenticated to access
+app.get('/new', async (req, res) => {
+    try {
+        res.render('admin/new')
+    } catch (e) {
+        console.error(e)
+    }
+})
+
+app.get('/edit/:id', async (req, res) => 
+{
+    try {
+        const client = new MongoClient(url)
+
+        const article = await client.db("QCC-DB").collection("Articles").findOne({_id: ObjectID(req.params.id.trim())});
+
+        if (article == null) { res.redirect('/admin/adminArticles') }
+
+        res.render('admin/edit', {article: article})
+        
+        await client.close();
     } catch (e) {
         console.error(e)
     }
