@@ -379,6 +379,8 @@ nav img {
 
 .article-long span {
   margin-left: 60px;
+  width: 120px;
+  overflow: hidden;
 }
 
 .change-btns {
