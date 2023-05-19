@@ -32,7 +32,6 @@ router.post('/', async (req, res) => {
         markdown: req.body.markdown,
         tags: req.body.tags,
         author: req.body.author,
-        image: req.body.image,
         category: req.body.category,
         published: req.body.published
     })
