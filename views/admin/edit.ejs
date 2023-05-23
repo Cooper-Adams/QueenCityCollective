@@ -9,18 +9,52 @@
     <title>Edit Article</title>
 </head>
 <body>
-    <form action="">
+    <form method="POST" action="/articles">
         <div class="editing-container" style="display: flex; flex-direction: column;">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="<%= article.title %>">
+            <input type="text" id="title" name="title" value="<%= article.title %>" required>
 
             <label for="description">Description:</label>
-            <input type="text" id="description" name="description" value="<%= article.description %>">
+            <input type="text" id="description" name="description" value="<%= article.description %>" required>
 
-            <textarea id="editor"><%= article.markdown %></textarea>
+            <label for="author">Author:</label>
+            <select name="author" id="author">
+                <option value="Cooper Adams">Cooper Adams</option>
+                <option value="Owen Watterson">Owen Watterson</option>
+            </select>
 
-            <button>Save</button>
+            <div class="middle" style="display: flex; justify-content: center; align-items: center;">
+                <div class="texteditor">
+                    <label for="markdown"></label>
+                    <textarea name="markdown" id="editor"><%= article.markdown %></textarea>
+                </div>
+
+                <div class="tags">
+                    <div class="tagsTop" style="display: flex;">
+                        <h3>Article Tags</h3>
+                        <button class="newTagBtn">+</button>
+                    </div>
+                    <% for (let i = 0; i < article.tags.length; ++i) { %>
+                        <div class="tag"><%= article.tags[i] %> <button class="tagBtn">X</button></div>
+                    <% } %>
+
+                    <label for="category">Category:</label>
+                    <select name="category" id="category">
+                        <option value="Panthers">Carolina Panthers</option>
+                        <option value="Hornets">Charlotte Hornets</option>
+                        <option value="Hurricanes">Carolina Hurricanes</option>
+                    </select>
+                </div>
+            </div>
         </div>
+
+        <p>Publish Page?</p>
+        <input type="radio" id="true" name="truefalse" value="true">
+        <label for="true">Yes</label><br>
+        <input type="radio" id="false" name="truefalse" value="false">
+        <label for="false">No</label><br>
+
+        <input id="submit" type="submit">
     </form>
 </body>
 
