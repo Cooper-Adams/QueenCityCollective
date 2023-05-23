@@ -25,15 +25,19 @@ router.get('/:id', async (req, res) =>
 })
 
 router.post('/', async (req, res) => {
+    console.log(req)
+
     //Uses the article model to create a new savable article
     let article = new Article({
         title: req.body.title,
         description: req.body.description,
         markdown: req.body.markdown,
+        createdAt: req.body.createdAt,
+        updatedAt: req.body.updatedAt,
         tags: req.body.tags,
         author: req.body.author,
         category: req.body.category,
-        published: req.body.published
+        published: req.body.truefalse
     })
     
     try {
@@ -42,11 +46,13 @@ router.post('/', async (req, res) => {
         await client.db("QCC-DB").collection("Articles").insertOne(article);
 
         if (req.body.published) {
-            res.redirect(`/articles/${article._id}`)
+            res.render(`/articles/${article._id}`)
         }
 
         else {
-            res.redirect('/admin/adminArticles')
+            const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
+
+            res.render('admin/adminArticles', { articles: articles })
         }
 
         await client.close()
