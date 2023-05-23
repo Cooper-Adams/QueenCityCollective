@@ -29,15 +29,9 @@
 
                 <span><%= articles[i].createdAt.toLocaleDateString() %></span>
 
-                <div class="change-btns">
-                    <% if (articles[i].published == "false") { %>
-                        <button>Publish</button>
-                    <% } %>
-    
-                    <a href="edit/<%= articles[i]._id %>">Edit</button>
-    
-                    <button>Delete</button>
-                </div>
+                <a href="edit/<%= articles[i]._id %>">Edit</a>
+                
+                <button>Delete</button>
             </div>
         <% } %>
     </div>
