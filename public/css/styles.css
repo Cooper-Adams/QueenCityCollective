@@ -390,6 +390,121 @@ nav img {
   gap: 20px;
 }
 
+/* Edit/New Formatting */
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 20px;
+}
+
+form label {
+  font-weight: bold;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+}
+
+.top > :last-child {
+  width: fit-content;
+}
+
+.top > * {
+  margin: 2px 0 10px 0;
+}
+
+.middle {
+  display: flex;
+  justify-content: center;
+}
+
+.middle > :first-child {
+  width: 100%;
+}
+
+.middle-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 0 7px 20px;
+}
+
+.tagsTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.tagsTop h3 {
+  margin: 0;
+}
+
+.tagsHeader {
+  display: flex;
+  align-items: center;
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: lightgray;
+  border: 1px solid black;
+  border-radius: 3px;
+  width: min-content;
+}
+
+.tag > p {
+  width: 89px;
+  padding: 0;
+  margin: 0;
+  overflow: ellipsis;
+}
+
+.tag > button {
+  background: none;
+	color: black;
+	border: none;
+	padding: 0;
+  margin: 0 0 0 8px;
+	font: inherit;
+  font-size: small;
+	cursor: pointer;
+	outline: inherit;
+  height: fit-content;
+}
+
+.newTagBtn {
+  background: none;
+	color: black;
+	border: none;
+	padding: 0;
+  margin: 0 0 0 15px;
+	font: inherit;
+  font-size: larger;
+	cursor: pointer;
+	outline: inherit;
+  height: fit-content;
+}
+
+.categoryBottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryOptions, .publishOptions {
+  display: inherit;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+
 /* Mobile formatting */
 @media only screen and (max-width: 640px){
   nav {
