@@ -446,8 +446,12 @@ form label {
 
 .tags {
   display: flex;
-  flex-direction: column;
   overflow-y: scroll;
+  flex-wrap: wrap;
+  gap: 5px;
+  height: 292px;
+  width: 226px;
+  margin: 5px 0 0 0;
 }
 
 .tag {
@@ -457,13 +461,16 @@ form label {
   border: 1px solid black;
   border-radius: 3px;
   width: min-content;
+  height: 20px;
 }
 
-.tag > p {
+.tag > input {
   width: 89px;
   padding: 0;
   margin: 0;
-  overflow: ellipsis;
+  border: none;
+  outline: none;
+  background-color: lightgray;
 }
 
 .tag > button {
@@ -471,7 +478,7 @@ form label {
 	color: black;
 	border: none;
 	padding: 0;
-  margin: 0 0 0 8px;
+  margin: 0 4px 0 4px;
 	font: inherit;
   font-size: small;
 	cursor: pointer;
