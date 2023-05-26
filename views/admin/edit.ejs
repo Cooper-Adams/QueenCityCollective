@@ -4,58 +4,78 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="/adminFunctions.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Article</title>
 </head>
 <body>
     <form method="POST" action="/articles">
-        <div class="editing-container" style="display: flex; flex-direction: column;">
+        <div class="top">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" value="<%= article.title %>" required>
-
+    
             <label for="description">Description:</label>
             <input type="text" id="description" name="description" value="<%= article.description %>" required>
-
+    
             <label for="author">Author:</label>
             <select name="author" id="author">
                 <option value="Cooper Adams">Cooper Adams</option>
                 <option value="Owen Watterson">Owen Watterson</option>
             </select>
+        </div>
 
-            <div class="middle" style="display: flex; justify-content: center; align-items: center;">
-                <div class="texteditor">
-                    <label for="markdown"></label>
-                    <textarea name="markdown" id="editor"><%= article.markdown %></textarea>
+        <div class="middle">
+            <div class="texteditor">
+                <label for="markdown"></label>
+                <textarea name="markdown" id="editor"><%= article.markdown %></textarea>
+            </div>
+
+            <div class="middle-right">
+                <div class="tagsTop">
+                    <div class="tagsHeader">
+                        <h3>Article Tags</h3>
+                        <button type="button" id="newTagBtn" class="newTagBtn">+</button>
+                    </div>
+                    <div class="tags">
+                        <% for (let i = 0; i < article.tags.length; ++i) { %>
+                            <div class="tag">
+                                <p><%= article.tags[i] %></p> <button type="button" class="tagBtn">✖</button>
+                            </div>
+                        <% } %>
+                    </div>
                 </div>
 
-                <div class="tags">
-                    <div class="tagsTop" style="display: flex;">
-                        <h3>Article Tags</h3>
-                        <button class="newTagBtn">+</button>
+                <div class="categoryBottom">
+                    <div class="categoryOptions">
+                        <label for="category">Category:</label>
+                        <select name="category" id="category">
+                            <option value="Panthers">Carolina Panthers</option>
+                            <option value="Hornets">Charlotte Hornets</option>
+                            <option value="Hurricanes">Carolina Hurricanes</option>
+                        </select>
                     </div>
-                    <% for (let i = 0; i < article.tags.length; ++i) { %>
-                        <div class="tag"><%= article.tags[i] %> <button class="tagBtn">X</button></div>
-                    <% } %>
 
-                    <label for="category">Category:</label>
-                    <select name="category" id="category">
-                        <option value="Panthers">Carolina Panthers</option>
-                        <option value="Hornets">Charlotte Hornets</option>
-                        <option value="Hurricanes">Carolina Hurricanes</option>
-                    </select>
+                    <div class="publishOptions">
+                        <label for="radio">Publish?</label>
+                        <input type="radio" id="true" name="truefalse" value="true">
+                        <label for="true">Yes</label><br>
+                        <input type="radio" id="false" name="truefalse" value="false">
+                        <label for="false">No</label><br>
+                    </div>
+
+                    <input class="formSubmit" id="submit" type="submit" value="Submit Article">
                 </div>
             </div>
         </div>
-
-        <p>Publish Page?</p>
-        <input type="radio" id="true" name="truefalse" value="true">
-        <label for="true">Yes</label><br>
-        <input type="radio" id="false" name="truefalse" value="false">
-        <label for="false">No</label><br>
-
-        <input id="submit" type="submit">
     </form>
+
+    <dialog data-modal class="modal">
+        <input class="modalInput" type="text">
+        <button data-close-modal formmethod="dialog" type="button">Cancel</button>
+        <button data-submit-modal type="button">Submit</button>
+    </dialog>
 </body>
 
 <script>
