@@ -25,8 +25,6 @@ router.get('/:id', async (req, res) =>
 })
 
 router.post('/', async (req, res) => {
-    console.log(req)
-
     //Uses the article model to create a new savable article
     let article = new Article({
         title: req.body.title,
@@ -34,7 +32,7 @@ router.post('/', async (req, res) => {
         markdown: req.body.markdown,
         createdAt: req.body.createdAt,
         updatedAt: req.body.updatedAt,
-        tags: req.body.tags,
+        tags: req.body['tags[]'],
         author: req.body.author,
         category: req.body.category,
         published: req.body.truefalse
