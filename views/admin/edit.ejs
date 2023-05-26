@@ -38,10 +38,11 @@
                         <h3>Article Tags</h3>
                         <button type="button" id="newTagBtn" class="newTagBtn">+</button>
                     </div>
-                    <div class="tags">
+                    <div id="tags" class="tags">
                         <% for (let i = 0; i < article.tags.length; ++i) { %>
                             <div class="tag">
-                                <p><%= article.tags[i] %></p> <button type="button" class="tagBtn">✖</button>
+                                <input type="text" value="<%= article.tags[i] %>" name="tags[]">
+                                <button type="button" id="tagBtn" class="tagBtn">✖</button>
                             </div>
                         <% } %>
                     </div>
