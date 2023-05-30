@@ -19,9 +19,7 @@ submitBtn.addEventListener("click", () => {
     newTagBtn.textContent = '✖';
     newTagBtn.setAttribute('type', "button")
     newTagBtn.setAttribute('id', 'tagBtn')
-    newTagBtn.addEventListener("click", (e) => {
-        tags.removeChild(e.target.parentElement)
-    })
+    newTagBtn.addEventListener("click", (e) => {tags.removeChild(e.target.parentElement)})
 
     const newTagInput = document.createElement("input")
     newTagInput.setAttribute('type', "text")
@@ -36,9 +34,7 @@ submitBtn.addEventListener("click", () => {
     modal.close()
 })
 
-deleteBtns.forEach(() => addEventListener("click", (e) => {
-    tags.removeChild(e.target.parentElement)
-}))
+deleteBtns.forEach(button => button.addEventListener("click", (e) => {tags.removeChild(e.target.parentElement)}))
 
 modal.addEventListener("click", e => {
     const modalDimensions = modal.getBoundingClientRect()
@@ -51,3 +47,8 @@ modal.addEventListener("click", e => {
         modal.close()
     }
 })
+
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
