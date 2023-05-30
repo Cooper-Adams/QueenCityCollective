@@ -414,6 +414,16 @@ form label {
   margin: 2px 0 10px 0;
 }
 
+.top-row {
+  display: flex;
+}
+
+.top-piece {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
 .middle {
   display: flex;
   justify-content: center;
