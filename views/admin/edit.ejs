@@ -19,11 +19,25 @@
             <label for="description">Description:</label>
             <input type="text" id="description" name="description" value="<%= article.description %>" required>
     
-            <label for="author">Author:</label>
-            <select name="author" id="author">
-                <option value="Cooper Adams">Cooper Adams</option>
-                <option value="Owen Watterson">Owen Watterson</option>
-            </select>
+            <div class="top-row">
+                <div class="top-piece">
+                    <label for="author">Author:</label>
+                    <select name="author" id="author">
+                        <option value="Cooper Adams">Cooper Adams</option>
+                        <option value="Owen Watterson">Owen Watterson</option>
+                    </select>
+                </div>
+    
+                <div class="top-piece">
+                    <label for="date">Created At:</label>
+                    <input type="date" name="createdAt" value="<%= article.createdAt.toLocaleDateString('en-ca') %>">
+                </div>
+    
+                <div class="top-piece">
+                    <label for="date">Updated At:</label>
+                    <input type="date" name="updatedAt" value="<%= article.updatedAt.toLocaleDateString('en-ca') %>">
+                </div>
+            </div>
         </div>
 
         <div class="middle">
@@ -41,13 +55,13 @@
                     <div id="tags" class="tags">
                         <% for (let i = 0; i < article.tags.length; ++i) { %>
                             <div class="tag">
-                                <input type="text" value="<%= article.tags[i] %>" name="tags[]">
+                                <input class="tag-input" type="text" value="<%= article.tags[i] %>" name="tags[]">
                                 <button type="button" id="tagBtn" class="tagBtn">✖</button>
                             </div>
-                        <% } %>
+                            <% } %>
+                        </div>
                     </div>
-                </div>
-
+                    
                 <div class="categoryBottom">
                     <div class="categoryOptions">
                         <label for="category">Category:</label>
