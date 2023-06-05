@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const articleRouter = require('./routes/articles')
+const methodOverride = require('method-override')
 const {MongoClient, ObjectId} = require('mongodb')
 const UserModel = require('./models/userModel')
 const { ObjectID } = require('bson')
@@ -23,6 +24,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 
 app.use(flash())
 app.use(session({
