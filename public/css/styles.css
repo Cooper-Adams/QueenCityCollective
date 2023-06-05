@@ -212,6 +212,17 @@ nav img {
   color: black;
 }
 
+/* Article Display CSS */
+.article-container {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: white;
+  margin: 5px auto 5px auto; 
+}
+
 /* Footer */
 .footer {
   bottom: 0;
