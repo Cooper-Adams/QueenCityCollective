@@ -10,6 +10,9 @@
 <body>
     <nav>
         <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+        <div class="nav-links">
+            <a href="/new">New Article</a>
+        </div>
     </nav>
 
     <div class="article-div">
@@ -31,7 +34,9 @@
 
                 <a href="edit/<%= articles[i]._id %>">Edit</a>
                 
-                <button>Delete</button>
+                <form action="/articles/<%= articles[i]._id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="newTagBtn">Delete</button>
+                </form>
             </div>
         <% } %>
     </div>
