@@ -3,17 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="/adminFunctions.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Article</title>
 </head>
 <body>
-    <div class="container">
-       <h1 class="mb-4">New Article</h1>
+    <form method="POST" action="/articles">
+        <div class="top">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+    
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+    
+            <div class="top-row">
+                <div class="top-piece">
+                    <label for="author">Author:</label>
+                    <select name="author" id="author">
+                        <option value="Cooper Adams">Cooper Adams</option>
+                        <option value="Owen Watterson">Owen Watterson</option>
+                    </select>
+                </div>
+    
+                <div class="top-piece">
+                    <label for="date">Created At:</label>
+                    <input type="date" name="createdAt" required>
+                </div>
+    
+                <div class="top-piece">
+                    <label for="date">Updated At:</label>
+                    <input type="date" name="updatedAt" required>
+                </div>
+            </div>
+        </div>
 
-       <form action="/articles" method="post">
-            <%- include('_form_fields') %>
-       </form>
-    </div>
+        <div class="middle">
+            <div class="texteditor">
+                <label for="markdown"></label>
+                <textarea name="markdown" id="editor"></textarea>
+            </div>
+
+            <div class="middle-right">
+                <div class="tagsTop">
+                    <div class="tagsHeader">
+                        <h3>Article Tags</h3>
+                        <button type="button" id="newTagBtn" class="newTagBtn">+</button>
+                    </div>
+                    <div id="tags" class="tags">
+                        
+                    </div>
+                    
+                <div class="categoryBottom">
+                    <div class="categoryOptions">
+                        <label for="category">Category:</label>
+                        <select name="category" id="category">
+                            <option value="Panthers">Carolina Panthers</option>
+                            <option value="Hornets">Charlotte Hornets</option>
+                            <option value="Hurricanes">Carolina Hurricanes</option>
+                        </select>
+                    </div>
+
+                    <div class="publishOptions">
+                        <label for="radio">Publish?</label>
+                        <input type="radio" id="true" name="truefalse" value="true">
+                        <label for="true">Yes</label><br>
+                        <input type="radio" id="false" name="truefalse" value="false">
+                        <label for="false">No</label><br>
+                    </div>
+
+                    <input class="formSubmit" id="submit" type="submit" value="Submit Article">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <dialog data-modal class="modal">
+        <input class="modalInput" type="text">
+        <button data-close-modal formmethod="dialog" type="button">Cancel</button>
+        <button data-submit-modal type="button">Submit</button>
+    </dialog>
 </body>
+
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("editor")})
+</script>
+
 </html>
