@@ -27,11 +27,12 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="article-container">
         <h1 class="article-title"><%= article.title %></h1>
-        <div class="article-date"><%= article.createdAt.toLocaleDateString()%></div>
+        <span><%= article.author %></span>
+        <span style="font-style: italic; color: lightgray;">Last Updated <%= article.createdAt.toLocaleDateString()%></span>
         <div class="article-text">
-            <%= article.content %>
+            <%- article.sanitizedHtml %>
         </div>
     </div>
 </body>
