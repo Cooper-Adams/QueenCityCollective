@@ -30,12 +30,16 @@
     
                 <div class="top-piece">
                     <label for="date">Created At:</label>
-                    <input type="date" name="createdAt" value="<%= article.createdAt.toLocaleDateString('en-ca') %>">
+                    <input type="date" name="createdAt" value="<%= article.createdAt %>">
                 </div>
     
                 <div class="top-piece">
                     <label for="date">Updated At:</label>
-                    <input type="date" name="updatedAt" value="<%= article.updatedAt.toLocaleDateString('en-ca') %>">
+                    <input type="date" name="updatedAt" value="<%= article.updatedAt %>">
+                </div>
+
+                <div class="top-id" style="display: none;">
+                    <input type="text" name="_id" value="<%= article._id %>">
                 </div>
             </div>
         </div>
@@ -43,7 +47,7 @@
         <div class="middle">
             <div class="texteditor">
                 <label for="markdown"></label>
-                <textarea name="markdown" id="editor"><%= article.markdown %></textarea>
+                <textarea name="markdown" id="editor"><%= article.sanitizedHtml %></textarea>
             </div>
 
             <div class="middle-right">
@@ -68,7 +72,7 @@
                         <select name="category" id="category">
                             <option value="Panthers">Carolina Panthers</option>
                             <option value="Hornets">Charlotte Hornets</option>
-                            <option value="Hurricanes">Carolina Hurricanes</option>
+                            <option value="CharlotteFC">Charlotte Football Club</option>
                         </select>
                     </div>
 
