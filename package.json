@@ -19,6 +19,8 @@
     "express-session": "^1.17.3",
     "jsdom": "^22.1.0",
     "marked": "^5.0.4",
+    "marked-gfm-heading-id": "^3.0.4",
+    "marked-mangle": "^1.0.1",
     "method-override": "^3.0.0",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",
