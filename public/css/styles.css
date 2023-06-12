@@ -214,13 +214,24 @@ nav img {
 
 /* Article Display CSS */
 .article-container {
-  width: 80%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
   background-color: white;
   margin: 5px auto 5px auto; 
+}
+
+.article-text {
+  width: 70%;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+iframe {
+  display: flex;
+  margin: 0 auto 0 auto;
 }
 
 /* Footer */
