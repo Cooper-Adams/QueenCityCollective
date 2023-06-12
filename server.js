@@ -193,7 +193,7 @@ function checkNotAuthenticated(req, res, next) {
 app.use('/articles', articleRouter)
 
 app.use((req, res, next) => {
-    res.status(404).send("Error 404: Content Not Found")
+    res.status(404).send("Error 404: Page Not Found")
 })
 
 app.listen(5500);
