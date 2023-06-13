@@ -22,7 +22,7 @@
             <div class="top-row">
                 <div class="top-piece">
                     <label for="author">Author:</label>
-                    <select name="author" id="author">
+                    <select name="author" id="author" required>
                         <option value="Cooper Adams">Cooper Adams</option>
                         <option value="Owen Watterson">Owen Watterson</option>
                     </select>
@@ -30,12 +30,12 @@
     
                 <div class="top-piece">
                     <label for="date">Created At:</label>
-                    <input type="date" name="createdAt" value="<%= article.createdAt %>">
+                    <input type="datetime-local" name="createdAt" <% let newDate = new Date(article.createdAt.getTime() - article.createdAt.getTimezoneOffset()*60000) %> value="<%= newDate.toISOString().slice(0, -1) %>" required>
                 </div>
     
                 <div class="top-piece">
                     <label for="date">Updated At:</label>
-                    <input type="date" name="updatedAt" value="<%= article.updatedAt %>">
+                    <input type="datetime-local" name="updatedAt" <% newDate = new Date(article.updatedAt.getTime() - article.updatedAt.getTimezoneOffset()*60000) %> value="<%= newDate.toISOString().slice(0, -1) %>" required>
                 </div>
 
                 <div class="top-id" style="display: none;">
@@ -78,9 +78,9 @@
 
                     <div class="publishOptions">
                         <label for="radio">Publish?</label>
-                        <input type="radio" id="true" name="truefalse" value="true">
+                        <input type="radio" id="true" name="truefalse" value="true" <% if (article.published == true) { %> checked <% } %>>
                         <label for="true">Yes</label><br>
-                        <input type="radio" id="false" name="truefalse" value="false">
+                        <input type="radio" id="false" name="truefalse" value="false" <% if (article.published == false) { %> checked <% } %>>
                         <label for="false">No</label><br>
                     </div>
 

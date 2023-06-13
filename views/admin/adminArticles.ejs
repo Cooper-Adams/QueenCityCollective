@@ -30,7 +30,13 @@
 
                 <span><%= articles[i].author %></span>
 
-                <span><%= articles[i].createdAt %></span>
+                <span><%= articles[i].createdAt.toLocaleDateString('en-US', {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }) %></span>
 
                 <a href="edit/<%= articles[i]._id %>">Edit</a>
                 
