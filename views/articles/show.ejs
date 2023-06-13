@@ -30,7 +30,13 @@
     <div class="article-container">
         <h1 class="article-title"><%= article.title %></h1>
         <span><%= article.author %></span>
-        <span style="font-style: italic; color: lightgray;">Last Updated <%= article.createdAt%></span>
+        <span style="font-style: italic; color: lightgray;">Last Updated <%= article.createdAt.toLocaleDateString('en-US', {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }) %></span>
         <div class="article-text">
             <%- article.sanitizedHtml %>
         </div>
