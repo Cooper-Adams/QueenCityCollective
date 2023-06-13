@@ -455,6 +455,11 @@ form label {
   width: 100%;
 }
 
+.CodeMirror {
+  height: 300px;
+  overflow-y: auto;
+}
+
 .middle-right {
   display: flex;
   flex-direction: column;
