@@ -10,6 +10,25 @@ newBtn.addEventListener("click", () => { modal.showModal() })
 
 closeBtn.addEventListener("click", () => { modal.close() })
 
+deleteBtns.forEach(button => button.addEventListener("click", (e) => {tags.removeChild(e.target.parentElement)}))
+
+modal.addEventListener("click", e => {
+    const modalDimensions = modal.getBoundingClientRect()
+    if (
+        e.clientX < modalDimensions.left ||
+        e.clientX > modalDimensions.right ||
+        e.clientY < modalDimensions.top ||
+        e.clientY > modalDimensions.bottom
+    ) {
+        modal.close()
+    }
+})
+
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
+
 submitBtn.addEventListener("click", () => {
     const newTag = document.createElement("div")
     newTag.classList.add("tag")
@@ -33,22 +52,3 @@ submitBtn.addEventListener("click", () => {
 
     modal.close()
 })
-
-deleteBtns.forEach(button => button.addEventListener("click", (e) => {tags.removeChild(e.target.parentElement)}))
-
-modal.addEventListener("click", e => {
-    const modalDimensions = modal.getBoundingClientRect()
-    if (
-        e.clientX < modalDimensions.left ||
-        e.clientX > modalDimensions.right ||
-        e.clientY < modalDimensions.top ||
-        e.clientY > modalDimensions.bottom
-    ) {
-        modal.close()
-    }
-})
-
-window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
-    e.returnValue = '';
-});
