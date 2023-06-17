@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/adminFunctions.js" defer></script>
+    <script src="/aaFunctions.js" defer></script>
     <title>All Articles</title>
 </head>
 <body>
@@ -57,13 +57,13 @@
 
                 <a href="edit/<%= articles[i]._id %>">Edit</a>
                 
-                <button type="button" class="newTagBtn" id="newTagBtn">Delete</button>
+                <button type="button" class="newTagBtn" id="<%= i %>">Delete</button>
 
                 <dialog data-modal class="modal">
                     <p>This will permanently erase this article and all of its' contents. Do you want to continue?</p>
                     <div class="modal-btns">
-                        <button data-close-modal formmethod="dialog" type="button" class="modal-buttons">Cancel</button>
-
+                        <button data-close-modal formmethod="dialog" type="button" class="modal-buttons" id="<%= i %>">Cancel</button>
+        
                         <form action="/articles/<%= articles[i]._id %>?_method=DELETE" method="POST">
                             <button class="modal-buttons" type="submit">Delete</button>
                         </form>
