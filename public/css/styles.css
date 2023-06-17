@@ -390,6 +390,11 @@ iframe {
   border-bottom: 2px solid #333;
 }
 
+.long-top {
+  font-weight: bold;
+  font-style: italic;
+}
+
 .article-long h3 {
   width: 425px;
   white-space: nowrap;
@@ -405,11 +410,30 @@ iframe {
   overflow: hidden;
 }
 
-.change-btns {
-  position: absolute;
-  right: 20px;
+.article-long a {
+	color: #0085CA;
+	cursor: pointer;
+  text-decoration: none;  
+}
+
+.article-long a, .article-long button {
+  margin-left: 30px;
+}
+
+.modal-btns {
   display: flex;
-  gap: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.modal-buttons {
+  background: none;
+	color: black;
+  font-weight: bolder;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	outline: inherit;
 }
 
 /* Edit/New Formatting */
@@ -525,7 +549,7 @@ form label {
 
 .newTagBtn {
   background: none;
-	color: black;
+	color: red;
 	border: none;
 	padding: 0;
   margin: 0 0 0 15px;
