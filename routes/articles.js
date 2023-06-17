@@ -73,14 +73,8 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const client = new MongoClient(url)
-
     await client.db("QCC-DB").collection("Articles").findOneAndDelete({_id: ObjectID(req.params.id)})
-
-    const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
-
-    res.render('admin/adminArticles', { articles: articles })
-
-    await client.close()
+    res.redirect('/')
 })
 
 module.exports = router
