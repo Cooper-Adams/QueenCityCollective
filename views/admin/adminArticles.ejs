@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/adminFunctions.js" defer></script>
     <title>All Articles</title>
 </head>
 <body>
@@ -16,6 +17,14 @@
     </nav>
 
     <div class="article-div">
+        <div class="article-long">
+            <div class="long-top" style="width: 100px;">Team</div>
+            <span class="long-top" style="width: 425px; margin-left: 40px;">Article Title</span>
+            <span class="long-top">Author</span>
+            <span class="long-top">Created</span>
+            <span class="long-top">Last Updated</span>
+        </div>
+
         <% for (let i = 0; i < articles.length; ++i) { %>
             <div class="article-long">
                 <% if (articles[i].category == "Hornets") { %>
@@ -38,11 +47,28 @@
                     minute: "2-digit"
                 }) %></span>
 
+                <span><%= articles[i].updatedAt.toLocaleDateString('en-US', {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }) %></span>
+
                 <a href="edit/<%= articles[i]._id %>">Edit</a>
                 
-                <form action="/articles/<%= articles[i]._id %>?_method=DELETE" method="POST">
-                    <button type="submit" class="newTagBtn">Delete</button>
-                </form>
+                <button type="button" class="newTagBtn" id="newTagBtn">Delete</button>
+
+                <dialog data-modal class="modal">
+                    <p>This will permanently erase this article and all of its' contents. Do you want to continue?</p>
+                    <div class="modal-btns">
+                        <button data-close-modal formmethod="dialog" type="button" class="modal-buttons">Cancel</button>
+
+                        <form action="/articles/<%= articles[i]._id %>?_method=DELETE" method="POST">
+                            <button class="modal-buttons" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </dialog>
             </div>
         <% } %>
     </div>
