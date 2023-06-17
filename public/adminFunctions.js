@@ -32,23 +32,23 @@ window.addEventListener('beforeunload', function (e) {
 submitBtn.addEventListener("click", () => {
     const newTag = document.createElement("div")
     newTag.classList.add("tag")
-
+    
     const newTagBtn = document.createElement("button")
     newTagBtn.classList.add("tagBtn")
     newTagBtn.textContent = '✖';
     newTagBtn.setAttribute('type', "button")
     newTagBtn.setAttribute('id', 'tagBtn')
     newTagBtn.addEventListener("click", (e) => {tags.removeChild(e.target.parentElement)})
-
+    
     const newTagInput = document.createElement("input")
     newTagInput.setAttribute('type', "text")
     newTagInput.setAttribute('value', input.value)
     newTagInput.setAttribute('name', "tags[]")
-
+    
     newTag.appendChild(newTagInput)
     newTag.appendChild(newTagBtn)
-
+    
     tags.appendChild(newTag)
-
+    
     modal.close()
 })
