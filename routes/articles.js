@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
 
         let newObjectId
         if (req.body._id == null) { newObjectId = new ObjectID() }
-        else {newObjectId = ObjectID(req.body._id)}
+        else { newObjectId = ObjectID(req.body._id) }
 
         let article = new Article({
             _id: newObjectId,
@@ -54,15 +54,9 @@ router.post('/', async (req, res) => {
             {upsert: true}
         )
 
-        if (req.body.published) {
-            res.render(`/articles/${article.slug}`)
-        }
+        if (req.body.published) { res.render(`/articles/${article.slug}`) }
 
-        else {
-            const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
-
-            res.render('admin/adminArticles', { articles: articles })
-        }
+        else { res.redirect('/adminArticles') }
 
         await client.close()
     } catch (e) {
@@ -74,7 +68,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const client = new MongoClient(url)
     await client.db("QCC-DB").collection("Articles").findOneAndDelete({_id: ObjectID(req.params.id)})
-    res.redirect('/')
+    res.redirect('/adminArticles')
 })
 
 module.exports = router
