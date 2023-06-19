@@ -12,72 +12,7 @@
 </head>
 <body>
     <form method="POST" action="/articles">
-        <div class="top">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-    
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" required>
-    
-            <div class="top-row">
-                <div class="top-piece">
-                    <label for="author">Author:</label>
-                    <select name="author" id="author">
-                        <option value="Cooper Adams">Cooper Adams</option>
-                        <option value="Owen Watterson">Owen Watterson</option>
-                    </select>
-                </div>
-    
-                <div class="top-piece">
-                    <label for="date">Created At:</label>
-                    <input type="date" name="createdAt" required>
-                </div>
-    
-                <div class="top-piece">
-                    <label for="date">Updated At:</label>
-                    <input type="date" name="updatedAt" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="middle">
-            <div class="texteditor">
-                <label for="markdown"></label>
-                <textarea name="markdown" id="editor"></textarea>
-            </div>
-
-            <div class="middle-right">
-                <div class="tagsTop">
-                    <div class="tagsHeader">
-                        <h3>Article Tags</h3>
-                        <button type="button" id="newTagBtn" class="newTagBtn">+</button>
-                    </div>
-                    <div id="tags" class="tags">
-                        
-                    </div>
-                    
-                <div class="categoryBottom">
-                    <div class="categoryOptions">
-                        <label for="category">Category:</label>
-                        <select name="category" id="category">
-                            <option value="Panthers">Carolina Panthers</option>
-                            <option value="Hornets">Charlotte Hornets</option>
-                            <option value="CharlotteFC">Charlotte Football Club</option>
-                        </select>
-                    </div>
-
-                    <div class="publishOptions">
-                        <label for="radio">Publish?</label>
-                        <input type="radio" id="true" name="truefalse" value="true">
-                        <label for="true">Yes</label><br>
-                        <input type="radio" id="false" name="truefalse" value="false">
-                        <label for="false">No</label><br>
-                    </div>
-
-                    <input class="formSubmit" id="submit" type="submit" value="Submit Article">
-                </div>
-            </div>
-        </div>
+        <%- include('_formFields') %>
     </form>
 
     <dialog data-modal class="modal">
