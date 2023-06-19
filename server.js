@@ -1,4 +1,5 @@
 const express = require('express')
+const Article = require('./models/article')
 const app = express()
 const articleRouter = require('./routes/articles')
 const methodOverride = require('method-override')
@@ -153,7 +154,7 @@ app.get('/adminArticles', async (req, res) => {
 //New (or Edit) Article route, must be authenticated to access
 app.get('/new', async (req, res) => {
     try {
-        res.render('admin/new')
+        res.render('admin/new', {article: new Article()})
     } catch (e) {
         console.error(e)
     }
