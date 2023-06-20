@@ -38,10 +38,8 @@ app.use(passport.session())
 app.get('/', async (req, res) => {
     try {
         const client = new MongoClient(url)
-
         const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray();
-    
-        res.render('articles/index', { articles: articles })
+        res.render('articles/index', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
     }
@@ -86,10 +84,8 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 app.get('/Panthers', async(req, res) => {
     try {
         const client = new MongoClient(url)
-
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Panthers"}).sort({createdAt: -1}).toArray();
-
-        res.render('articles/Panthers', { articles: articles })
+        res.render('articles/Panthers', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
     }
@@ -98,10 +94,8 @@ app.get('/Panthers', async(req, res) => {
 app.get('/Hornets', async(req, res) => {
     try {
         const client = new MongoClient(url)
-
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Hornets"}).sort({createdAt: -1}).toArray();
-
-        res.render('articles/Hornets', { articles: articles })
+        res.render('articles/Hornets', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
     }
@@ -110,10 +104,8 @@ app.get('/Hornets', async(req, res) => {
 app.get('/CharlotteFC', async(req, res) => {
     try {
         const client = new MongoClient(url)
-
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "CharlotteFC"}).sort({createdAt: -1}).toArray();
-
-        res.render('articles/CharlotteFC', { articles: articles })
+        res.render('articles/CharlotteFC', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
     }
@@ -154,6 +146,13 @@ app.get('/edit/:id', checkAuthenticated, async (req, res) =>
     }
 })
 
+app.get('/articles/:slug', async (req, res) => {
+    const client = new MongoClient(url)
+    const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.params.slug });
+    if (article == null) { res.redirect('/') }
+    res.render('articles/show', { article: article, loggedIn: checkLoggedIn(req.user) })
+})
+
 app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
         if (err) {
@@ -172,6 +171,11 @@ function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/')
     } next()
+}
+
+function checkLoggedIn(user) {
+    if (user != undefined) { return true }
+    else { return false }
 }
 
 app.use('/articles', articleRouter)
