@@ -18,6 +18,16 @@
             <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/Panthers">Panthers</a>
             <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/Hornets">Hornets</a>
             <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/CharlotteFC">Charlotte FC</a>
+
+            <% if (loggedIn) { %>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="javascript: document.logoutForm.submit()">LogOut</a>
+            <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
+                <button hidden class="log-out" type="submit"></button>
+            </form>
+            <% } else { %>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/register">SignUp</a>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/login">LogIn</a>
+            <% } %>
         </ul>
         
         <div class="burger <% if (article.category == "Hornets") { %><%= "hornets" %><% } %>">

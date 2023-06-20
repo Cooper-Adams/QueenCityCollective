@@ -17,9 +17,15 @@
             <a href="/Hornets">Hornets</a>
             <a href="/CharlotteFC">Charlotte FC</a>
 
-            <form action="/logout?_method=DELETE" method="POST">
-                <button class="log-out" type="submit">Log Out</button>
+            <% if (loggedIn) { %>
+            <a href="javascript: document.logoutForm.submit()">LogOut</a>
+            <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
+                <button hidden class="log-out" type="submit"></button>
             </form>
+            <% } else { %>
+            <a href="/register">SignUp</a>
+            <a href="/login">LogIn</a>
+            <% } %>
         </ul>
         
         <div class="burger">

@@ -16,6 +16,16 @@
             <a href="/Panthers">Panthers</a>
             <a href="/Hornets">Hornets</a>
             <a href="/CharlotteFC">Charlotte FC</a>
+
+            <% if (loggedIn) { %>
+            <a href="javascript: document.logoutForm.submit()">LogOut</a>
+            <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
+                <button hidden class="log-out" type="submit"></button>
+            </form>
+            <% } else { %>
+            <a href="/register">SignUp</a>
+            <a href="/login">LogIn</a>
+            <% } %>
         </ul>
         
         <div class="burger">
@@ -73,7 +83,7 @@
 
                 <div class="official-links">
                     <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/Panthers.png"></a>
-                    <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/HornetsTest.png"></a>
+                    <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/Hornets.png"></a>
                     <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/CharlotteFC.png"></a>
                 </div>
             </div>

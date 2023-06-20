@@ -16,6 +16,16 @@
             <a class="hornets" href="/Panthers">Panthers</a>
             <a class="hornets" href="/Hornets">Hornets</a>
             <a class="hornets" href="/CharlotteFC">Charlotte FC</a>
+
+            <% if (loggedIn) { %>
+            <a class="hornets" href="javascript: document.logoutForm.submit()">LogOut</a>
+            <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
+                <button hidden class="log-out" type="submit"></button>
+            </form>
+            <% } else { %>
+            <a class="hornets" href="/register">SignUp</a>
+            <a class="hornets" href="/login">LogIn</a>
+            <% } %>
         </ul>
         
         <div class="burger hornets">
@@ -60,7 +70,7 @@
             </div>
         
             <div class="footer-middle">
-                <span>Socials</span>
+                <span class="hornets">Socials</span>
 
                 <div class="middle-links">
                     <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/spotify.png"></a>
@@ -69,11 +79,11 @@
             </div>
 
             <div class="footer-far">
-                <span>Official Sites</span>
+                <span class="hornets">Official Sites</span>
 
                 <div class="official-links">
                     <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/Panthers.png"></a>
-                    <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/HornetsTest.png"></a>
+                    <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/Hornets.png"></a>
                     <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/CharlotteFC.png"></a>
                 </div>
             </div>
