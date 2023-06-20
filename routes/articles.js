@@ -13,18 +13,6 @@ const router = express.Router()
 var dotenv = require('dotenv').config()
 var url = process.env.MONGOLAB_URL
 
-router.get('/:slug', async (req, res) => {
-    const client = new MongoClient(url)
-
-    const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.params.slug });
-
-    if (article == null) { res.redirect('/') }
-
-    res.render('articles/show', {article: article})
-        
-    await client.close();
-})
-
 router.post('/', async (req, res) => {    
     try {
         const client = new MongoClient(url)
