@@ -5,12 +5,14 @@ const articleRouter = require('./routes/articles')
 const methodOverride = require('method-override')
 const {MongoClient, ObjectId} = require('mongodb')
 const UserModel = require('./models/userModel')
+const CommentModel = require('./models/commentModel')
 const { ObjectID } = require('bson')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 
 const initializePassport = require('./passport-config');
+const { mongo } = require('mongoose')
 initializePassport(
     passport, 
     async email => new MongoClient(url).db("QCC-DB").collection("Profiles").findOne({email: email}),
@@ -79,6 +81,21 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
     } finally {
         res.redirect('/login')
     }
+})
+
+app.post('/comment', async (req, res) => {
+    const client = new MongoClient(url)
+
+    var newComment = new CommentModel({
+        commenterName: req.body.name,
+        comment: req.body.comment
+    })
+
+    // Add comments as subdocuments to the articles in the article collection
+
+    const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.body.slug });
+    if (article == null) { res.redirect('/') }
+    else { res.render('articles/show', { article: article, loggedIn: checkLoggedIn(req.user) }) }
 })
 
 app.get('/Panthers', async(req, res) => {
@@ -150,7 +167,8 @@ app.get('/articles/:slug', async (req, res) => {
     const client = new MongoClient(url)
     const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.params.slug });
     if (article == null) { res.redirect('/') }
-    res.render('articles/show', { article: article, loggedIn: checkLoggedIn(req.user) })
+    if (checkLoggedIn(req.user)) { res.render('articles/show', { article: article, loggedIn: true, name: (req.user.firstName + " " + req.user.lastName) }) }
+    else { res.render('articles/show', { article: article, loggedIn: false }) }
 })
 
 app.delete('/logout', (req, res, next) => {
