@@ -25,8 +25,8 @@
                 <button hidden class="log-out" type="submit"></button>
             </form>
             <% } else { %>
-            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/register">SignUp</a>
-            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/login">LogIn</a>
+                <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/login">LogIn</a>
+                <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/register">Register</a>
             <% } %>
         </ul>
         
@@ -49,6 +49,24 @@
         }) %></span>
         <div class="article-text">
             <%- article.sanitizedHtml %>
+        </div>
+
+        <div class="comment-container">
+            <h2>Leave a comment:</h2>
+    
+            <form action="/comment" method="POST">
+                <textarea name="comment" id="comment" cols="20" rows="10"></textarea>
+    
+                <input type="text" name="slug" id="slug" value="<%= article.slug %>" hidden>
+
+                <% if (loggedIn) { %>
+                    <input type="text" name="name" id="name" value="<%= name %>" hidden>
+
+                    <button type="submit">Comment</button>
+                <% } else { %>
+                    <a href="/login">Log In to leave a comment!</a>
+                <% } %>
+            </form>
         </div>
     </div>
 </body>
