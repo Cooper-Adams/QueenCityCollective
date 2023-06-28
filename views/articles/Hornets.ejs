@@ -23,8 +23,8 @@
                 <button hidden class="log-out" type="submit"></button>
             </form>
             <% } else { %>
-            <a class="hornets" href="/register">SignUp</a>
-            <a class="hornets" href="/login">LogIn</a>
+                <a class="hornets" href="/login">LogIn</a>
+                <a class="hornets" href="/register">Register</a>
             <% } %>
         </ul>
         
@@ -55,13 +55,7 @@
                 </ul>
             </section>
         
-            <div class="news-box">
-                <h3>Headlines</h3>
-
-                <% for (let i = 3; i < 12; i++) { %>
-                    <a href="/" class="headline-title"><%= articles[0].title %></a>
-                <% } %>
-            </div>
+            <a class="twitter-timeline" data-height="386" data-width="400" data-dnt="true" href="https://twitter.com/TheQCCollective?ref_src=twsrc%5Etfw">Tweets by TheQCCollective</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
     
         <footer class="footer hornets">
