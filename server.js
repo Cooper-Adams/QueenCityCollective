@@ -47,19 +47,15 @@ app.get('/', async (req, res) => {
     }
 })
 
-app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('admin/login')
-});
+app.get('/log-reg', checkNotAuthenticated, (req, res) => {
+    res.render('admin/log-reg', {user: new UserModel()})
+})
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
 }))
-
-app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('admin/register', {user: new UserModel()})
-})
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
@@ -77,9 +73,9 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
         await client.db("QCC-DB").collection("Profiles").insertOne(newUser);
     } catch (e) {
-        res.redirect('/register', {user: newUser})
+        res.redirect('/log-reg', {user: newUser})
     } finally {
-        res.redirect('/login')
+        res.redirect('/log-reg', {user: new UserModel()})
     }
 })
 
