@@ -23,8 +23,7 @@
                 <button hidden class="log-out" type="submit"></button>
             </form>
             <% } else { %>
-                <a class="hornets" href="/login">LogIn</a>
-                <a class="hornets" href="/register">Register</a>
+                <a class="hornets" href="/log-reg">LogIn</a>
             <% } %>
         </ul>
         
@@ -45,7 +44,7 @@
                                 <div class="card-title"><%= articles[i].title %></div>
                                 <div class="card-desc"><%= articles[i].description %></div>
 
-                                <a class="article-link" href="/<%= articles[i].objectID %>">Continue Reading &#8594</a>
+                                <a class="article-link" href="articles/<%= articles[i].slug %>">Continue Reading &#8594</a>
 
                                 <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
                                 <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
@@ -54,8 +53,14 @@
                     <% } %>
                 </ul>
             </section>
-        
-            <a class="twitter-timeline" data-height="386" data-width="400" data-dnt="true" href="https://twitter.com/TheQCCollective?ref_src=twsrc%5Etfw">Tweets by TheQCCollective</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            <div class="news-box">
+                <h3>Headlines</h3>
+
+                <% for (let i = 3; i < 12; i++) { %>
+                    <a href="articles/<%= articles[0].slug %>" class="headline-title"><%= articles[0].title %></a>
+                <% } %>
+            </div>
         </div>
     
         <footer class="footer hornets">
