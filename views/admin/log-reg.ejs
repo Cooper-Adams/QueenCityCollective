@@ -5,10 +5,16 @@
     <script type="text/javascript" src="/logRegFunctions.js" defer></script>
 </head>
 
+<% if (messages.error) { %>
+	<div class="error-div hidden">
+		<h4 class="flash"> <%= messages.error %> </h4>
+	</div>
+<% } %>
+
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="/register" method="POST">
-			<h1>Create Account</h1>
+			<h1>Sign Up</h1>
 			
             <div class="social-container">
 				<a href="#"><i class="fa fa-facebook"></i></a>
@@ -20,7 +26,9 @@
 			<input type="text" placeholder="First Name" name="firstName" required value="<%= user.firstName %>">
             <input type="text" placeholder="Last Name" name="lastName" required value="<%= user.lastName %>">
 			<input type="email" placeholder="Email" name="email" required value="<%= user.email %>">
-			<input type="password" placeholder="Password" name="password" required>
+			<input type="password" placeholder="Password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" required>
+			<input type="password" placeholder="Confirm Password" name="confirm" required>
+			<p class="pass-req">Passwords should include an Uppercase and Lowercase letter, a number, and a special character while being at least 8 characters.</p>
 			<button>Sign Up</button>
 		</form>
 	</div>
