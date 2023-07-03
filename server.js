@@ -53,12 +53,18 @@ app.get('/log-reg', checkNotAuthenticated, (req, res) => {
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/log-reg',
     failureFlash: true
 }))
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
+        if (req.body.confirm != req.body.password)
+        {
+            req.flash('error', "Passwords do not match.")
+            return
+        }
+
         const client = new MongoClient(url)
 
         var newUser = new UserModel({
@@ -73,9 +79,10 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 
         await client.db("QCC-DB").collection("Profiles").insertOne(newUser);
     } catch (e) {
-        res.redirect('/log-reg', {user: newUser})
+        req.flash('error', e)
+        res.redirect('/log-reg')
     } finally {
-        res.redirect('/log-reg', {user: new UserModel()})
+        res.redirect('/log-reg')
     }
 })
 
@@ -171,7 +178,7 @@ app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
         if (err) {
             return next(err)
-        } res.redirect('/login')
+        } res.redirect('/log-reg')
     })
 })
 
