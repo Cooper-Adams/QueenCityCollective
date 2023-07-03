@@ -10,17 +10,16 @@ const { ObjectID } = require('bson')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
+const { mongoose } = require('mongoose')
+
+mongoose.connect(process.env.MONGOLAB_URL)
 
 const initializePassport = require('./passport-config');
-const { mongo } = require('mongoose')
 initializePassport(
     passport, 
-    async email => new MongoClient(url).db("QCC-DB").collection("Profiles").findOne({email: email}),
-    async id => new MongoClient(url).db("QCC-DB").collection("Profiles").findOne({id: id})
+    async email => await new MongoClient(process.env.MONGOLAB_URL).db("QCC-DB").collection("Profiles").findOne({email: email}),
+    async id => await new MongoClient(process.env.MONGOLAB_URL).db("QCC-DB").collection("Profiles").findOne({id: id})
 );
-
-var dotenv = require('dotenv').config()
-var url = process.env.MONGOLAB_URL
 
 app.set('view engine', 'ejs')
 
@@ -39,7 +38,7 @@ app.use(passport.session())
 
 app.get('/', async (req, res) => {
     try {
-        const client = new MongoClient(url)
+        const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray();
         res.render('articles/index', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
@@ -58,6 +57,18 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
+    var newUser = new UserModel({
+        id: Date.now().toString(),
+        email: req.body.email,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    });
+
+    newUser.save(async function(err) { if (err) throw err})
+
+    const client = new MongoClient(process.env.MONGOLAB_URL)
+
     try {
         if (req.body.confirm != req.body.password)
         {
@@ -65,29 +76,24 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
             return
         }
 
-        const client = new MongoClient(url)
+        if (await client.db("QCC-DB").collection("Profiles").findOne({email: req.body.email}))
+        {
+            req.flash('error', "Email is already in use.")
+            return
+        }
 
-        var newUser = new UserModel({
-            id: Date.now().toString(),
-            email: req.body.email,
-            password: req.body.password,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
-        });
-
-        newUser.save(function(err) { if (err) throw err})
-
-        await client.db("QCC-DB").collection("Profiles").insertOne(newUser);
+        console.log(await client.db("QCC-DB").collection("Profiles").insertOne(newUser))
     } catch (e) {
         req.flash('error', e)
         res.redirect('/log-reg')
     } finally {
-        res.redirect('/log-reg')
+        await client.close()
+        res.redirect('/log-reg') 
     }
 })
 
 app.post('/comment', async (req, res) => {
-    const client = new MongoClient(url)
+    const client = new MongoClient(process.env.MONGOLAB_URL)
 
     var newComment = new CommentModel({
         commenterName: req.body.name,
@@ -103,44 +109,42 @@ app.post('/comment', async (req, res) => {
 
 app.get('/Panthers', async(req, res) => {
     try {
-        const client = new MongoClient(url)
+        const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Panthers"}).sort({createdAt: -1}).toArray();
         res.render('articles/Panthers', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
-    }
+    } finally { await client.close() }
 });
 
 app.get('/Hornets', async(req, res) => {
     try {
-        const client = new MongoClient(url)
+        const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Hornets"}).sort({createdAt: -1}).toArray();
         res.render('articles/Hornets', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
-    }
+    } finally { await client.close() }
 });
 
 app.get('/CharlotteFC', async(req, res) => {
     try {
-        const client = new MongoClient(url)
+        const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "CharlotteFC"}).sort({createdAt: -1}).toArray();
         res.render('articles/CharlotteFC', { articles: articles, loggedIn: checkLoggedIn(req.user) })
     } catch (e) {
         console.error(e)
-    }
+    } finally { await client.close() }
 });
 
 app.get('/adminArticles', checkAuthenticated, async (req, res) => {
     try {
-        const client = new MongoClient(url)
-
+        const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
-
         res.render('admin/adminArticles', {articles: articles})
     } catch (e) {
         console.error(e)
-    }
+    } finally { await client.close() }
 })
 
 app.get('/new', checkAuthenticated, async (req, res) => {
@@ -154,16 +158,13 @@ app.get('/new', checkAuthenticated, async (req, res) => {
 app.get('/edit/:id', checkAuthenticated, async (req, res) => 
 {
     try {
-        const client = new MongoClient(url)
-
+        const client = new MongoClient(process.env.MONGOLAB_URL)
         const article = await client.db("QCC-DB").collection("Articles").findOne({_id: ObjectID(req.params.id.trim())});
-
         if (article == null) { res.redirect('/adminArticles') }
-
-        res.render('admin/edit', {article: article})        
+        else { res.render('admin/edit', {article: article}) }
     } catch (e) {
         console.error(e)
-    }
+    } finally { await client.close() }
 })
 
 app.get('/articles/:slug', async (req, res) => {
