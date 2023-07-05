@@ -50,6 +50,24 @@
             <%- article.sanitizedHtml %>
         </div>
 
+        <% if (article.comments) { %>
+            <% for (comment of article.comments) { %>
+                <div class="comment">
+                    <div class="c-top">
+                        <span class="comment-name"><%= comment.name %></span>
+                        <span style="font-style: italic; color: gray;"><%= new Date(comment.time).toLocaleDateString('en-US', {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                            hour: "numeric",
+                            minute: "2-digit"
+                        }) %></span>
+                    </div>
+                    <p class="comment-content"><%= comment.comment %></p>
+                </div>
+            <% } %>
+        <% } %>
+
         <div class="comment-container">
             <h2>Leave a comment:</h2>
     
@@ -63,7 +81,7 @@
 
                     <button type="submit">Comment</button>
                 <% } else { %>
-                    <a href="/login">Log In to leave a comment!</a>
+                    <a href="/log-reg">Log In to leave a comment!</a>
                 <% } %>
             </form>
         </div>
