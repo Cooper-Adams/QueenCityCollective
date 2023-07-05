@@ -5,14 +5,10 @@ const articleRouter = require('./routes/articles')
 const methodOverride = require('method-override')
 const {MongoClient, ObjectId} = require('mongodb')
 const UserModel = require('./models/userModel')
-const CommentModel = require('./models/commentModel')
 const { ObjectID } = require('bson')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
-const { mongoose } = require('mongoose')
-
-mongoose.connect(process.env.MONGOLAB_URL)
 
 const initializePassport = require('./passport-config');
 initializePassport(
@@ -95,16 +91,15 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 app.post('/comment', async (req, res) => {
     const client = new MongoClient(process.env.MONGOLAB_URL)
 
-    var newComment = new CommentModel({
-        commenterName: req.body.name,
-        comment: req.body.comment
-    })
+    try {
+        await client.db("QCC-DB").collection("Articles").findOneAndUpdate({ slug: req.body.slug }, {$push:{'comments':{'time': Date.now(), 'name': req.body.name, 'comment': req.body.comment}}})
+        
+        res.redirect('articles/' + req.body.slug)
 
-    // Add comments as subdocuments to the articles in the article collection
-
-    const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.body.slug });
-    if (article == null) { res.redirect('/') }
-    else { res.render('articles/show', { article: article, loggedIn: checkLoggedIn(req.user) }) }
+        await client.close()
+    } catch (e) {
+        console.error(e)
+    }
 })
 
 app.get('/Panthers', async(req, res) => {
@@ -115,36 +110,39 @@ app.get('/Panthers', async(req, res) => {
     } catch (e) {
         console.error(e)
     } finally { await client.close() }
-});
+})
 
 app.get('/Hornets', async(req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "Hornets"}).sort({createdAt: -1}).toArray();
         res.render('articles/Hornets', { articles: articles, loggedIn: checkLoggedIn(req.user) })
+        await client.close()
     } catch (e) {
         console.error(e)
-    } finally { await client.close() }
-});
+    }
+})
 
 app.get('/CharlotteFC', async(req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find({category: "CharlotteFC"}).sort({createdAt: -1}).toArray();
         res.render('articles/CharlotteFC', { articles: articles, loggedIn: checkLoggedIn(req.user) })
+        await client.close()
     } catch (e) {
         console.error(e)
-    } finally { await client.close() }
-});
+    }
+})
 
 app.get('/adminArticles', checkAuthenticated, async (req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
         const articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray();
         res.render('admin/adminArticles', {articles: articles})
+        await client.close()
     } catch (e) {
         console.error(e)
-    } finally { await client.close() }
+    }
 })
 
 app.get('/new', checkAuthenticated, async (req, res) => {
@@ -162,17 +160,23 @@ app.get('/edit/:id', checkAuthenticated, async (req, res) =>
         const article = await client.db("QCC-DB").collection("Articles").findOne({_id: ObjectID(req.params.id.trim())});
         if (article == null) { res.redirect('/adminArticles') }
         else { res.render('admin/edit', {article: article}) }
+        await client.close()
     } catch (e) {
         console.error(e)
-    } finally { await client.close() }
+    }
 })
 
 app.get('/articles/:slug', async (req, res) => {
-    const client = new MongoClient(url)
-    const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.params.slug });
-    if (article == null) { res.redirect('/') }
-    if (checkLoggedIn(req.user)) { res.render('articles/show', { article: article, loggedIn: true, name: (req.user.firstName + " " + req.user.lastName) }) }
-    else { res.render('articles/show', { article: article, loggedIn: false }) }
+    try {
+        const client = new MongoClient(process.env.MONGOLAB_URL)
+        const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.params.slug });
+        if (article == null) { res.redirect('/') }
+        if (checkLoggedIn(req.user)) { res.render('articles/show', { article: article, loggedIn: true, name: (req.user.firstName + " " + req.user.lastName) }) }
+        else { res.render('articles/show', { article: article, loggedIn: false }) }
+        await client.close()
+    } catch (e) {
+        console.error(e)
+    }
 })
 
 app.delete('/logout', (req, res, next) => {
