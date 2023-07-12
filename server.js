@@ -3,19 +3,20 @@ const Article = require('./models/article')
 const app = express()
 const articleRouter = require('./routes/articles')
 const methodOverride = require('method-override')
-const {MongoClient, ObjectId} = require('mongodb')
+const {MongoClient} = require('mongodb')
 const UserModel = require('./models/userModel')
 const { ObjectID } = require('bson')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
+const bcrypt = require('bcrypt')
 
 const initializePassport = require('./passport-config');
 initializePassport(
     passport, 
     async email => await new MongoClient(process.env.MONGOLAB_URL).db("QCC-DB").collection("Profiles").findOne({email: email}),
     async id => await new MongoClient(process.env.MONGOLAB_URL).db("QCC-DB").collection("Profiles").findOne({id: id})
-);
+)
 
 app.set('view engine', 'ejs')
 
@@ -52,40 +53,33 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     failureFlash: true
 }))
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-    var newUser = new UserModel({
-        id: Date.now().toString(),
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
-    });
-
-    newUser.save(async function(err) { if (err) throw err})
-
+app.post('/register', async (req, res) => {
     const client = new MongoClient(process.env.MONGOLAB_URL)
+    
+    if (req.body.confirm != req.body.password) {
+        req.flash('error', "Passwords do not match.")
+    } else if (await client.db("QCC-DB").collection("Profiles").findOne({email: req.body.email})) {
+        req.flash('error', "Email is already in use.")
+    } else {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
-    try {
-        if (req.body.confirm != req.body.password)
-        {
-            req.flash('error', "Passwords do not match.")
-            return
+        var newUser = new UserModel({
+            id: Date.now().toString(),
+            email: req.body.email,
+            password: hashedPassword,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        })
+
+        try {
+            await client.db("QCC-DB").collection("Profiles").insertOne(newUser)
+        } catch (e) {
+            console.error(e)
         }
-
-        if (await client.db("QCC-DB").collection("Profiles").findOne({email: req.body.email}))
-        {
-            req.flash('error', "Email is already in use.")
-            return
-        }
-
-        console.log(await client.db("QCC-DB").collection("Profiles").insertOne(newUser))
-    } catch (e) {
-        req.flash('error', e)
-        res.redirect('/log-reg')
-    } finally {
-        await client.close()
-        res.redirect('/log-reg') 
     }
+    
+    await client.close()
+    res.redirect('/log-reg')
 })
 
 app.post('/comment', async (req, res) => {
@@ -93,10 +87,9 @@ app.post('/comment', async (req, res) => {
 
     try {
         await client.db("QCC-DB").collection("Articles").findOneAndUpdate({ slug: req.body.slug }, {$push:{'comments':{'time': Date.now(), 'name': req.body.name, 'comment': req.body.comment}}})
+        await client.close()
         
         res.redirect('articles/' + req.body.slug)
-
-        await client.close()
     } catch (e) {
         console.error(e)
     }
@@ -178,6 +171,15 @@ app.get('/articles/:slug', async (req, res) => {
         console.error(e)
     }
 })
+
+app.get('/auth/twitter', passport.authenticate('twitter', { scope: ['tweet.read', 'users.read', "offline.access"]}))
+
+app.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', { 
+    failureRedirect: '/log-reg',
+    failureFlash: true,
+    successRedirect: "/"
+}))
 
 app.delete('/logout', (req, res, next) => {
     req.logOut((err) => {
