@@ -6,7 +6,7 @@
 </head>
 
 <% if (messages.error) { %>
-	<div class="error-div hidden">
+	<div class="error-div">
 		<h4 class="flash"> <%= messages.error %> </h4>
 	</div>
 <% } %>
@@ -19,7 +19,7 @@
             <div class="social-container">
 				<a href="#"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-google"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
 			</div>
 			
             <span>or sign up with your email</span>
@@ -40,7 +40,7 @@
             <div class="social-container">
 				<a href="#"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-google"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
 			</div>
 			
             <span>or use your account</span>
