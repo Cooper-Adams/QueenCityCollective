@@ -6,6 +6,42 @@ var dotenv = require('dotenv').config()
 
 const LocalStrategy = require('passport-local').Strategy
 const { Strategy } = require('@superfaceai/passport-twitter-oauth2');
+const GoogleStrategy = require('passport-google-oidc');
+
+//Google Strategy
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: `${process.env.BASE_URL}/oauth2/redirect/google`,
+    scope: [ 'profile' ]
+  }, async (issuer, profile, done) => {
+        const client = new MongoClient(process.env.MONGOLAB_URL)
+
+        let currentUser = await client.db("QCC-DB").collection("Profiles").findOne({id: profile.id})
+
+        if (!currentUser) {
+            const hashedPassword = await bcrypt.hash(profile.id, 10)
+
+            currentUser = new UserModel({
+                id: profile.id,
+                email: "DEFAULT",
+                firstName: profile.name.givenName,
+                lastName: profile.name.familyName,
+                screenName: profile.displayName,
+                password: hashedPassword
+            })
+
+            await client.db("QCC-DB").collection("Profiles").insertOne(currentUser)
+
+            if (currentUser) {
+                return done(null, currentUser)
+            }
+        }
+
+        await client.close()
+
+        return done(null, currentUser)
+}))
 
 //Twitter Strategy
 passport.use(
@@ -19,12 +55,12 @@ passport.use(
       async (access_token_key, refreshToken, profile, done) => {
         const client = new MongoClient(process.env.MONGOLAB_URL)
 
-        const currentUser = await client.db("QCC-DB").collection("Profiles").findOne({id: profile.id})
+        let currentUser = await client.db("QCC-DB").collection("Profiles").findOne({id: profile.id})
 
         if (!currentUser) {
             const hashedPassword = await bcrypt.hash(profile.id, 10)
 
-            const newUser = new UserModel({
+            currentUser = new UserModel({
                 id: profile.id,
                 email: "DEFAULT",
                 firstName: "TWITTER",
@@ -33,16 +69,16 @@ passport.use(
                 password: hashedPassword
             })
 
-            await client.db("QCC-DB").collection("Profiles").insertOne(newUser)
+            await client.db("QCC-DB").collection("Profiles").insertOne(currentUser)
 
-            if (newUser) {
-                return done(null, newUser)
+            if (currentUser) {
+                return done(null, currentUser)
             }
         }
 
         await client.close()
 
-        return done(null, currentUser);
+        return done(null, currentUser)
       }
     )
 )
