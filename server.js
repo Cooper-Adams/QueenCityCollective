@@ -42,4 +42,16 @@ app.use((req, res, next) => {
     res.status(404).send("Error 404: Page Not Found")
 })
 
-app.listen(5500)
+const https = require('https')
+const fs = require('fs')
+
+const server = https.createServer(
+    {
+      key: fs.readFileSync(process.env.CERT_KEY_FILENAME, 'utf8'),
+      cert: fs.readFileSync(process.env.CERT_FILENAME, 'utf8'),
+    },
+    app
+)
+server.listen(5500, _ => {
+    console.log('App listening at https://localhost')
+})
