@@ -62,7 +62,7 @@ router.get('/auth/twitter/callback',
   passport.authenticate('twitter', { 
     failureRedirect: '/log-reg',
     failureFlash: true,
-    successRedirect: "/"
+    successRedirect: '/'
 }))
 
 router.get('/auth/google', passport.authenticate('google'))
@@ -74,6 +74,12 @@ router.get('/oauth2/redirect/google', passport.authenticate('google', {
 }))
 
 router.get('/auth/facebook', passport.authenticate('facebook'))
+
+router.get('/oauth2/redirect/facebook', passport.authenticate('facebook', { 
+    failureRedirect: '/log-reg',
+    failureFlash: true,
+    successRedirect: '/'
+}))
 
 //"AUTH" Function
 function checkNotAuthenticated(req, res, next) {
