@@ -4,9 +4,47 @@ const {MongoClient} = require('mongodb')
 const UserModel = require('./models/userModel')
 var dotenv = require('dotenv').config()
 
+const FacebookStrategy = require('passport-facebook')
+const GoogleStrategy = require('passport-google-oidc')
 const LocalStrategy = require('passport-local').Strategy
-const { Strategy } = require('@superfaceai/passport-twitter-oauth2');
-const GoogleStrategy = require('passport-google-oidc');
+const { Strategy } = require('@superfaceai/passport-twitter-oauth2')
+
+//Facebook Strategy
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: 'https://127.0.0.1:5500/oauth2/redirect/facebook',
+    Proxy: true
+  },
+  async function(accessToken, refreshToken, profile, cb) {
+    const client = new MongoClient(process.env.MONGOLAB_URL)
+
+    let currentUser = await client.db("QCC-DB").collection("Profiles").findOne({id: profile.id})
+
+        if (!currentUser) {
+            const hashedPassword = await bcrypt.hash(profile.id, 10)
+
+            currentUser = new UserModel({
+                id: profile.id,
+                email: "DEFAULT",
+                firstName: 'FACEBOOK',
+                lastName: 'USER',
+                screenName: profile.displayName,
+                password: hashedPassword
+            })
+
+            await client.db("QCC-DB").collection("Profiles").insertOne(currentUser)
+
+            if (currentUser) {
+                return cb(null, currentUser)
+            }
+        }
+
+        await client.close()
+
+        return cb(null, currentUser)
+  }
+))      
 
 //Google Strategy
 passport.use(new GoogleStrategy({
