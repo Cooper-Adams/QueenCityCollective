@@ -4,7 +4,7 @@ This site was a personal project of mine to work on my full-stack development sk
 
 The database of choice is the popular noSQL variant, MongoDB, which contains the information pertaining to articles and user profiles. 
 
-Articles are managed within the admin panel on the website, and cannot be created/updated/deleted without accessing the database directly or by visiting the admin panel with the correct profile credentials. Articles themselves are written in markdown and are converted to HTML when viewed in their pages. The markdown editor used is [Marked](https://github.com/markedjs/marked), and the markdown is santized with [DOMPurify](https://github.com/cure53/DOMPurify).
+Articles are managed within the admin panel on the website, and cannot be created/updated/deleted without accessing the database directly or by visiting the admin panel with the correct profile credentials. Articles themselves are written in markdown and are converted to HTML when viewed in their pages. The markdown editor used is [Marked](https://github.com/markedjs/marked), and the markdown is sanitized with [DOMPurify](https://github.com/cure53/DOMPurify).
 
 Login and registration is available to the user through the site itself, or through multiple social media paths, which are Facebook, Google, and X (formerly Twitter). Usernames and passwords (or the references to the social media providers) are stored within the database, with passwords being hashed before being stored. Password hashing is done with the fantastic package known as [bcrypt](https://www.npmjs.com/package/bcrypt).
 
