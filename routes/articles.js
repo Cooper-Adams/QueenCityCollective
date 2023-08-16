@@ -5,8 +5,9 @@ const { MongoClient } = require('mongodb')
 router.get('/', async (req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
-        const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray();
-        res.render('articles/index', { articles: articles, loggedIn: checkLoggedIn(req.user) })
+        const articles = await client.db("QCC-DB").collection("Articles").find().limit(12).sort({createdAt: -1}).toArray()
+        if (checkLoggedIn(req.user)) { res.render('articles/index', { articles: articles, loggedIn: true, role: req.user.role }) }
+        else { res.render('articles/index', { articles: articles, loggedIn: false }) }
     } catch (e) {
         console.error(e)
     }
