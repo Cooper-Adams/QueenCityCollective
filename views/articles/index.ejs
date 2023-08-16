@@ -12,7 +12,12 @@
     <nav>
         <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
         
-        <ul class="nav-links"> 
+        <ul class="nav-links">
+            <% if (loggedIn) { %>
+                <% if (role == 'ADMIN') {%>
+                    <a href="/adminArticles">Admin</a>
+                <% } %>
+            <% } %>
             <a href="/Panthers">Panthers</a>
             <a href="/Hornets">Hornets</a>
             <a href="/CharlotteFC">Charlotte FC</a>
