@@ -13,7 +13,7 @@ const { Strategy } = require('@superfaceai/passport-twitter-oauth2')
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'https://127.0.0.1:5500/oauth2/redirect/facebook',
+    callbackURL: `${process.env.BASE_URL}/oauth2/redirect/facebook`,
     Proxy: true
   },
   async function(accessToken, refreshToken, profile, cb) {
@@ -51,7 +51,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: `${process.env.BASE_URL}/oauth2/redirect/google`,
-    scope: [ 'profile' ]
+    scope: [ 'profile' ],
   }, async (issuer, profile, done) => {
         const client = new MongoClient(process.env.MONGOLAB_URL)
 
