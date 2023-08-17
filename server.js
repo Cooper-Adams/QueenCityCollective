@@ -5,6 +5,7 @@ const adminRouter = require('./routes/admin.js')
 const authRouter = require('./routes/auth')
 const { MongoClient } = require('mongodb')
 const passport = require('passport')
+const methodOverride = require('method-override')
 const flash = require('express-flash')
 const session = require('express-session')
 
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 
 app.use(flash())
 app.use(session({
@@ -29,17 +31,27 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+//Handles Authentication routes
+app.use('/', authRouter)
+
 //Handles Article routes
 app.use('/', articleRouter)
 
 //Handles Admin routes
 app.use('/', adminRouter)
 
-//Handles Authentication routes
-app.use('/', authRouter)
-
 app.use((req, res, next) => {
+    console.log(req + " " + res)
     res.status(404).send("Error 404: Page Not Found")
+})
+
+app.delete('/logout', (req, res, next) => {
+    console.log("HELLO")
+    req.logOut((err) => {
+        if (err) {
+            return next(err)
+        } res.redirect('/log-reg')
+    })
 })
 
 const https = require('https')
