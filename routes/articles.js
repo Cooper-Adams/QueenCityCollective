@@ -64,7 +64,10 @@ router.get('/articles/:slug', async (req, res) => {
         const client = new MongoClient(process.env.MONGOLAB_URL)
         const article = await client.db("QCC-DB").collection("Articles").findOne({ slug: req.params.slug });
         if (article == null) { res.redirect('/') }
-        if (checkLoggedIn(req.user)) { res.render('articles/show', { article: article, loggedIn: true, name: (req.user.firstName + " " + req.user.lastName) }) }
+        if (checkLoggedIn(req.user)) {
+            if (req.user.screenName) { res.render('articles/show', { article: article, loggedIn: true, name: (req.user.screenName)}) }
+            else { res.render('articles/show', { article: article, loggedIn: true, name: (req.user.firstName + " " + req.user.lastName)}) } 
+        }
         else { res.render('articles/show', { article: article, loggedIn: false }) }
         await client.close()
     } catch (e) {
