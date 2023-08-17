@@ -4,9 +4,6 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const { MongoClient } = require('mongodb')
 const UserModel = require('./../models/userModel')
-const methodOverride = require('method-override')
-
-router.use(methodOverride('_method'))
 
 router.get('/log-reg', checkNotAuthenticated, (req, res) => {
     res.render('admin/log-reg', {user: new UserModel()})
