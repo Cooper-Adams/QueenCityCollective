@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/admin.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/aaFunctions.js" defer></script>
+    <title>Comments for <%= article.title %></title>
+</head>
+<body>
+    <nav>
+        <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+        <div class="nav-links">
+            <a href="/adminArticles">Return</a>
+        </div>
+    </nav>
+
+    <div class="article-div">
+        <div class="article-long">
+            <span class="long-top" style="width: 200px;">Name</span>
+            <span class="long-top" style="width: 200px;">Time</span>
+            <span class="long-top">Comment</span>
+        </div>
+
+        <% for (let i = 0; i < article.comments.length; ++i) { %>
+            <div class="article-long">
+                <span style="width: 200px;"><%= article.comments[i].name %></span>
+
+                <span style="width: 200px;"><%= new Date(article.comments[i].time).toLocaleDateString('en-US', {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }) %></span>
+
+                <span class="comment-span"><%= article.comments[i].comment %></span>
+
+                <button type="button" class="newTagBtn" id="<%= i %>">Delete</button>
+
+                <dialog data-modal class="modal">
+                    <p>This will permanently delete this comment. Do you want to continue?</p>
+                    <div class="modal-btns">
+                        <button data-close-modal formmethod="dialog" type="button" class="modal-buttons" id="<%= i %>">Cancel</button>
+        
+                        <form action="/<%= article._id %>/<%= article.comments[i].comment %>?_method=DELETE" method="POST">
+                            <button class="modal-buttons" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </dialog>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
