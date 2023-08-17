@@ -57,6 +57,16 @@ router.delete('/:id', async (req, res) => {
     res.redirect('/adminArticles')
 })
 
+router.delete('/:id/:comment', async (req, res) => {
+    const client = new MongoClient(url)
+    await client.db("QCC-DB").collection("Articles").updateOne(
+        { },
+        { '$pull': { comments: { comment: req.params.comment } } },
+        true
+    )
+    res.redirect('/adminArticles')
+})
+
 router.get('/adminArticles', checkAuthenticated, async (req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
@@ -75,6 +85,19 @@ router.get('/edit/:id', checkAuthenticated, async (req, res) =>
         const article = await client.db("QCC-DB").collection("Articles").findOne({_id: ObjectID(req.params.id.trim())});
         if (article == null) { res.redirect('/adminArticles') }
         else { res.render('admin/edit', {article: article}) }
+        await client.close()
+    } catch (e) {
+        console.error(e)
+    }
+})
+
+router.get('/comments/:id', checkAuthenticated, async (req, res) => 
+{
+    try {
+        const client = new MongoClient(process.env.MONGOLAB_URL)
+        const article = await client.db("QCC-DB").collection("Articles").findOne({_id: ObjectID(req.params.id.trim())});
+        if (article == null) { res.redirect('/adminArticles') }
+        else { res.render('admin/comments', {article: article}) }
         await client.close()
     } catch (e) {
         console.error(e)
