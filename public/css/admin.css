@@ -25,6 +25,12 @@
     width: 120px;
     overflow: hidden;
 }
+
+.article-long .comment-span {
+    margin-left: 30px;
+    width: 700px;
+    overflow: hidden;
+}
   
 .article-long a {
     color: #0085CA;
