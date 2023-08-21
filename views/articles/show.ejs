@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= article.title %></title>
 </head>
-<body>
+<body style="background-color: white;">
     <nav <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %>>
         <a href="/" rel="noopener noreferrer">
             <img src=<% if (article.category == "Hornets") { %> <%= "/Logos/Q-Cropped-Hornets.png" %> <% } else { %>
@@ -15,9 +15,9 @@
         </a>
         
         <ul class="nav-links">
-            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/Panthers">Panthers</a>
-            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/Hornets">Hornets</a>
-            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="articles/CharlotteFC">Charlotte FC</a>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/Panthers">Panthers</a>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/Hornets">Hornets</a>
+            <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/CharlotteFC">Charlotte FC</a>
 
             <% if (loggedIn) { %>
             <a <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %> href="javascript: document.logoutForm.submit()">LogOut</a>
@@ -38,24 +38,25 @@
 
     <div class="article-container">
         <h1 class="article-title"><%= article.title %></h1>
-        <span><%= article.author %></span>
-        <span style="font-style: italic; color: lightgray;">Last Updated <%= article.createdAt.toLocaleDateString('en-US', {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        }) %></span>
+        <div class="article-info">
+            <span style="margin-bottom: 10px;"><%= article.author %></span>
+            <span style="color: darkgray;"><%= article.createdAt.toLocaleDateString('en-US', {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            }) %></span>
+        </div>
         <div class="article-text">
             <%- article.sanitizedHtml %>
         </div>
 
         <% if (article.comments) { %>
+            <h3 class="comments-header">Comments</h4>
             <% for (comment of article.comments) { %>
                 <div class="comment">
                     <div class="c-top">
-                        <span class="comment-name"><%= comment.name %></span>
-                        <span style="font-style: italic; color: gray;"><%= new Date(comment.time).toLocaleDateString('en-US', {
+                        <span class="comment-name" style="font-weight: bold; padding-right: .5rem;"><%= comment.name %></span>
+                        <span style="font-style: italic; color: darkgray;"><%= new Date(comment.time).toLocaleDateString('en-US', {
                             day: "numeric",
                             month: "short",
                             year: "numeric",
@@ -68,23 +69,46 @@
             <% } %>
         <% } %>
 
-        <div class="comment-container">
-            <h2>Leave a comment:</h2>
-    
-            <form action="/comment" method="POST">
-                <textarea name="comment" id="comment" cols="20" rows="10"></textarea>
-    
-                <input type="text" name="slug" id="slug" value="<%= article.slug %>" hidden>
+        <form class="comment-container" action="/comment" method="POST">
+            <h2>Leave a Comment:</h2>
 
-                <% if (loggedIn) { %>
-                    <input type="text" name="name" id="name" value="<%= name %>" hidden>
+            <textarea name="comment" id="comment" rows="10" cols="60" required></textarea>
+                
+            <input type="text" name="slug" id="slug" value="<%= article.slug %>" hidden>
 
-                    <button type="submit">Comment</button>
-                <% } else { %>
-                    <a href="/log-reg">Log In to leave a comment!</a>
-                <% } %>
-            </form>
-        </div>
+            <% if (loggedIn) { %>
+                <input type="text" name="name" id="name" value="<%= name %>" hidden>
+
+                <button class="comment-submit" type="submit">Comment</button>
+            <% } else { %>
+                <a href="/log-reg">Log In to leave a comment!</a>
+            <% } %>
+        </form>
     </div>
+
+    <footer style="bottom: auto;" class="footer <% if (article.category == "Hornets") { %><%= "hornets" %><% } %>">
+        <div class="big-img">
+            <img <% if (article.category == "Hornets") { %> src="/Logos/QCC Hornets Transparent.png" <% } else { %> src="/Logos/QCC Transparent.png" <% } %> alt="Queen City Collective Logo" draggable="false">
+        </div>
+    
+        <div class="footer-middle">
+            <span <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %>>Socials</span>
+
+            <div class="middle-links">
+                <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/spotify.png"></a>
+                <a href="https://twitter.com/TheQCCollective" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/twitter.png"></a>
+            </div>
+        </div>
+
+        <div class="footer-far">
+            <span <% if (article.category == "Hornets") { %> class= <%= "hornets" %><% } %>>Official Sites</span>
+
+            <div class="official-links">
+                <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/Panthers.png"></a>
+                <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/Hornets.png"></a>
+                <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/CharlotteFC.png"></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
