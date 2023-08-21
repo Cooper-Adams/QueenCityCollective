@@ -9,11 +9,7 @@ body {
   background-color: #eeeeee;
   font-family: motiva-sans, sans-serif;
   font-style: normal;
-}
-
-.container {
-  min-height: 100%;
-  position: relative;
+  min-height: 100vh;
 }
 
 div {
@@ -214,7 +210,7 @@ nav img {
 
 /* Article Display CSS */
 .article-container {
-  width: 100%;
+  width: 70%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -224,9 +220,63 @@ nav img {
 }
 
 .article-text {
-  width: 70%;
   font-size: 20px;
   line-height: 28px;
+  padding: 1.5rem;
+}
+
+.article-info {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+.comment, .comments-header {
+  align-self: flex-start;
+  padding-left: 1.5rem;
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 0 10px 0;
+}
+
+.comment-container textarea {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 12px 12px;
+  resize: none;
+}
+
+.comment-container textarea:focus {
+  outline: none !important;
+  border: 1px solid #0085CA;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.comment-submit {
+  align-self: flex-start;
+  text-align: center;
+  text-decoration: none;
+  border: solid 2px transparent;
+  border-radius: 0.4em;
+  padding: 0.5em 1em;
+  color: #ffffff;
+  background-color: #0085CA;
+  cursor: pointer;
+}
+
+.comment-submit:active {
+  transform: translateY(1px);
+  filter: saturate(150%);
+}
+
+.comment-submit:hover {
+  color: #0085CA;
+  border-color: #0085CA;
+  background-color: white;
 }
 
 iframe {
@@ -236,14 +286,15 @@ iframe {
 
 /* Footer */
 .footer {
-  bottom: 0;
-  margin-top: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: black;
   padding: 10px 40px;
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footer span {
@@ -392,6 +443,20 @@ iframe {
   .footer {
     flex-direction: column;
     gap: 20px;
+  }
+
+  .article-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: white;
+    margin: 5px auto 5px auto; 
+  }
+
+  iframe {
+    width: max-content;
   }
 }
 
