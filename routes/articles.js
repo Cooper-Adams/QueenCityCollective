@@ -50,9 +50,13 @@ router.get('/AllArticles/:category', async(req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
         let articles
-        if (req.body.category == "ALL") { articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray() }
-        else { articles = await client.db("QCC-DB").collection("Articles").find({category: req.body.category}).sort({createdAt: -1}).toArray() }
-        res.render('articles/AllArticles', { articles: articles, loggedIn: checkLoggedIn(req.user)})
+        if (req.params.category == "ALL") { 
+            articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray()
+        } else { 
+            articles = await client.db("QCC-DB").collection("Articles").find({category: req.params.category}).sort({createdAt: -1}).toArray()
+        }
+
+        res.render('articles/AllArticles', { articles: articles, loggedIn: checkLoggedIn(req.user), category: req.body.category})
         await client.close()
     } catch (e) {
         console.error(e)
