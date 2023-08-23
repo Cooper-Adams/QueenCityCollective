@@ -46,11 +46,11 @@ router.get('/CharlotteFC', async(req, res) => {
     }
 })
 
-router.get('/AllArticles/:category', async(req, res) => {
+router.get('/allarticles/:category', async(req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
         let articles
-        if (req.params.category == "ALL") { 
+        if (req.params.category == 'ALL' || req.params.category == 'all') { 
             articles = await client.db("QCC-DB").collection("Articles").find().sort({createdAt: -1}).toArray()
         } else { 
             articles = await client.db("QCC-DB").collection("Articles").find({category: req.params.category}).sort({createdAt: -1}).toArray()
