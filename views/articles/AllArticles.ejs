@@ -36,41 +36,28 @@
         </div>
     </nav>
 
-    <div class="body-content">
-        <section class="slider-wrapper">
-            <ul class="slides-container" id="slides-container">
-                <% for (let i = 0; i < 4; ++i) { %>
-                    <% if (articles[i].category == "Hornets") { %>
-                        <li class="slide hornetBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
-                    <% } else if (articles[i].category == "Panthers") { %>
-                        <li class="slide pantherBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
-                    <% } else if (articles[i].category == "CharlotteFC") { %>
-                        <li class="slide cltfcBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
-                    <% } %>
-                        <div class="article-info-box">
-                            <div class="card-title"><%= articles[i].title %></div>
-                            <div class="card-desc"><%= articles[i].description %></div>
-
-                            <a class="article-link" href="articles/<%= articles[i].slug %>">Continue Reading &#8594</a>
-
-                            <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
-                            <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
-                        </div>                        
-                    </li>
-                <% } %>
-            </ul>
-        </section>
-        
-        <div class="news-box">
-            <h3>Headlines</h3>
-            <% for (let i = 3; i < 12; i++) { %>
-                <a href="/" class="headline-title"><%= articles[0].title %></a>
-                <!-- swap the 0 to articles.length when there are more than 4 articles posted and give it a scrollbar -->
-            <% } %>
-        </div>
+    <div class="long-article-wrapper">
+        <% for (let i = 0; i < articles.length; ++i) { %>
+            <a class="la-article-link" href="../articles/<%= articles[i].slug %>">
+                <div class="la-box">
+                    <img class="la-image" src="/Logos/<%= articles[i].category %>.png" alt="Logo for <%= articles[i].category %>">
+                    <div class="la-top">
+                        <h4 class="la-title"><%= articles[i].title %></h2>
+                        <span style="color: darkgray;"><%= articles[i].createdAt.toLocaleDateString('en-US', {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric"
+                        }) %></span>
+                    </div>
+                    <div class="la-bottom">
+                        <p><%= articles[i].description %></p>
+                    </div>
+                </div>        
+            </a>
+        <% } %>
     </div>
 
-    <footer class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
+    <footer <% if (articles.length > 2) { %> style="bottom: auto;" <% } %> class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
         <div class="big-img">
             <img <% if (category == "Hornets") { %> src="/Logos/QCC Hornets Transparent.png" <% } else { %> src="/Logos/QCC Transparent.png" <% } %> alt="Queen City Collective Logo" draggable="false">
         </div>
