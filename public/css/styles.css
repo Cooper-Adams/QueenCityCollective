@@ -198,6 +198,7 @@ nav img {
   margin: 0;
   padding: 10px;
   border-bottom: 2px solid #0085CA;
+  color: #0085CA;
 }
 
 .headline-title {
@@ -347,6 +348,13 @@ iframe {
   outline: #0085CA;
 }
 
+.all-articles {
+  align-self: center;
+  justify-self: center;
+  font-weight: bold;
+  color: #0085CA;
+}
+
 /* Animations */
 @keyframes navLinkFade {
  from{
@@ -440,11 +448,6 @@ iframe {
     overflow: wrap;
   }
 
-  .footer {
-    flex-direction: column;
-    gap: 20px;
-  }
-
   .article-container {
     width: 100%;
     display: flex;
@@ -457,6 +460,12 @@ iframe {
 
   iframe {
     width: max-content;
+  }
+
+  .footer {
+    bottom: auto;
+    flex-direction: column;
+    gap: 20px;
   }
 }
 
