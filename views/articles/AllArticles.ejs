@@ -36,66 +36,63 @@
         </div>
     </nav>
 
-    <div class="container">    
-        <div class="body-content">
-            <section class="slider-wrapper">
-                <ul class="slides-container" id="slides-container">
-                    <% for (let i = 0; i < 4; ++i) { %>
-                        <% if (articles[i].category == "Hornets") { %>
-                            <li class="slide hornetBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
-                        <% } else if (articles[i].category == "Panthers") { %>
-                            <li class="slide pantherBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
-                        <% } else if (articles[i].category == "CharlotteFC") { %>
-                            <li class="slide cltfcBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
-                        <% } %>
-                            <div class="article-info-box">
-                                <div class="card-title"><%= articles[i].title %></div>
-                                <div class="card-desc"><%= articles[i].description %></div>
-
-                                <a class="article-link" href="articles/<%= articles[i].slug %>">Continue Reading &#8594</a>
-
-                                <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
-                                <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
-                            </div>                        
-                        </li>
+    <div class="body-content">
+        <section class="slider-wrapper">
+            <ul class="slides-container" id="slides-container">
+                <% for (let i = 0; i < 4; ++i) { %>
+                    <% if (articles[i].category == "Hornets") { %>
+                        <li class="slide hornetBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
+                    <% } else if (articles[i].category == "Panthers") { %>
+                        <li class="slide pantherBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
+                    <% } else if (articles[i].category == "CharlotteFC") { %>
+                        <li class="slide cltfcBG" id=<%= (i + 1) %> style="background-image: url(../Logos/<%= articles[i].category + ".png" %>);">
                     <% } %>
-                </ul>
-            </section>
-        
-            <div class="news-box">
-                <h3>Headlines</h3>
+                        <div class="article-info-box">
+                            <div class="card-title"><%= articles[i].title %></div>
+                            <div class="card-desc"><%= articles[i].description %></div>
 
-                <% for (let i = 3; i < 12; i++) { %>
-                    <a href="/" class="headline-title"><%= articles[0].title %></a>
-                    <!-- swap the 0 to articles.length when there are more than 4 articles posted and give it a scrollbar -->
+                            <a class="article-link" href="articles/<%= articles[i].slug %>">Continue Reading &#8594</a>
+
+                            <button class="slide-arrow left" id="slide-arrow-prev">&#8249;</button>
+                            <button class="slide-arrow right" id="slide-arrow-next">&#8250;</button>
+                        </div>                        
+                    </li>
                 <% } %>
-            </div>
+            </ul>
+        </section>
+        
+        <div class="news-box">
+            <h3>Headlines</h3>
+            <% for (let i = 3; i < 12; i++) { %>
+                <a href="/" class="headline-title"><%= articles[0].title %></a>
+                <!-- swap the 0 to articles.length when there are more than 4 articles posted and give it a scrollbar -->
+            <% } %>
+        </div>
+    </div>
+
+    <footer class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
+        <div class="big-img">
+            <img <% if (category == "Hornets") { %> src="/Logos/QCC Hornets Transparent.png" <% } else { %> src="/Logos/QCC Transparent.png" <% } %> alt="Queen City Collective Logo" draggable="false">
         </div>
     
-        <footer style="bottom: auto;" class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
-            <div class="big-img">
-                <img <% if (article.category == "Hornets") { %> src="/Logos/QCC Hornets Transparent.png" <% } else { %> src="/Logos/QCC Transparent.png" <% } %> alt="Queen City Collective Logo" draggable="false">
-            </div>
-        
-            <div class="footer-middle">
-                <span <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %>>Socials</span>
+        <div class="footer-middle">
+            <span <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %>>Socials</span>
 
-                <div class="middle-links">
-                    <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/spotify.png"></a>
-                    <a href="https://twitter.com/TheQCCollective" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/twitter.png"></a>
-                </div>
+            <div class="middle-links">
+                <a href="https://open.spotify.com/show/2bfF51rlCjdxXWIxatDrBf" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/spotify.png"></a>
+                <a href="https://twitter.com/TheQCCollective" target="_blank" rel="noopener noreferrer"><img width="24px" src="/Logos/twitter.png"></a>
             </div>
+        </div>
 
-            <div class="footer-far">
-                <span <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %>>Official Sites</span>
+        <div class="footer-far">
+            <span <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %>>Official Sites</span>
 
-                <div class="official-links">
-                    <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/Panthers.png"></a>
-                    <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/Hornets.png"></a>
-                    <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/CharlotteFC.png"></a>
-                </div>
+            <div class="official-links">
+                <a href="https://www.panthers.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/Panthers.png"></a>
+                <a href="https://www.hornets.com/" target="_blank" rel="noopener noreferrer"><img width="60px" src="/Logos/Hornets.png"></a>
+                <a href="https://www.charlottefootballclub.com/" target="_blank" rel="noopener noreferrer"><img width="48px" src="/Logos/CharlotteFC.png"></a>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 </body>
 </html>
