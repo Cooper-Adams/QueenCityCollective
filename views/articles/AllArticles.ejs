@@ -57,6 +57,8 @@
         <% } %>
     </div>
 
+    <%- include('_pageCarousel') %>
+
     <footer <% if (articles.length > 2) { %> style="bottom: auto;" <% } %> class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
         <div class="big-img">
             <img <% if (category == "Hornets") { %> src="/Logos/QCC Hornets Transparent.png" <% } else { %> src="/Logos/QCC Transparent.png" <% } %> alt="Queen City Collective Logo" draggable="false">
