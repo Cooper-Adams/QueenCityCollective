@@ -1,0 +1,47 @@
+    <div class="pageCarousel">
+    <% if (page != 1 && page != 2 && page != 3 && page != pages && page != (pages - 1) && page != (pages - 2)) { %>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= (parseInt(page) - 1) %>"><%= (parseInt(page) - 1) %></a>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page<%= page %>"><%= page %></a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= (parseInt(page) + 1) %>"><%= (parseInt(page) + 1) %></a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } else if (page == 1) { %>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page1">1</a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page2">2</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } else if (page == 2) { %>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page2">2</a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page3">3</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } else if (page == 3) { %>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page2">2</a>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page3">3</a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page4">4</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } else if (page == pages) { %>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages - 1 %>"><%= pages - 1 %></a>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } else if (page == pages - 1) { %>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages - 2 %>"><%= pages - 2 %></a>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page<%= pages - 1 %>"><%= pages - 1 %></a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } else if (page == 3) { %>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
+        <span class="pc-spacer">...</span>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages - 3 %>"><%= pages - 3 %></a>
+        <a class="pc-link active" href="/allarticles/<%= category %>/Page<%= pages - 2 %>"> <%= pages - 2 %></a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages - 1 %>"><%= pages - 1 %></a>
+        <a class="pc-link" href="/allarticles/<%= category %>/Page<%= pages %>"><%= pages %></a>
+    <% } %>
+</div>
