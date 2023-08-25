@@ -315,6 +315,32 @@ iframe {
   padding: 5px;
 }
 
+.pageCarousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  justify-self: center;
+  gap: .75rem;
+  margin-top: 2rem;
+  font-size: 20px;
+}
+
+.pc-link, .pc-spacer {
+  text-decoration: none;
+  color: black;
+}
+
+.pc-link.active {
+  text-decoration: underline;
+  text-decoration-color: #0085CA;
+  text-decoration-thickness: 2px;
+}
+
+.pc-link:hover {
+  color: #0085CA;
+}
+
 /* Footer */
 .footer {
   display: flex;
