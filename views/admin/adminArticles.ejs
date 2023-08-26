@@ -11,6 +11,17 @@
 <body>
     <nav>
         <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
+
+        <div class="dropdown">
+            <button class="dropbtn">Category</button>
+            <div class="dropdown-content">
+                <a href="/adminArticles/Panthers">Panthers</a>
+                <a href="/adminArticles/Hornets">Hornets</a>
+                <a href="/adminArticles/CharlotteFC">CharlotteFC</a>
+                <a href="/adminArticles">None</a>
+            </div>
+        </div>
+
         <div class="nav-links">
             <a href="/new">New Article</a>
         </div>
@@ -20,9 +31,10 @@
         <div class="article-long">
             <div class="long-top" style="width: 100px;">Team</div>
             <span class="long-top" style="width: 425px; margin-left: 40px;">Article Title</span>
-            <span class="long-top">Author</span>
-            <span class="long-top">Created</span>
-            <span class="long-top">Last Updated</span>
+            <span class="long-top side">Author</span>
+            <span class="long-top side">Created</span>
+            <span class="long-top side">Last Updated</span>
+            <span class="long-top side">Published?</span>
         </div>
 
         <% for (let i = 0; i < articles.length; ++i) { %>
@@ -37,9 +49,9 @@
 
                 <h3><%= articles[i].title %></h3>
 
-                <span><%= articles[i].author %></span>
+                <span class="side"><%= articles[i].author %></span>
 
-                <span><%= articles[i].createdAt.toLocaleDateString('en-US', {
+                <span class="side"><%= articles[i].createdAt.toLocaleDateString('en-US', {
                     day: "numeric",
                     month: "short",
                     year: "numeric",
@@ -47,13 +59,21 @@
                     minute: "2-digit"
                 }) %></span>
 
-                <span><%= articles[i].updatedAt.toLocaleDateString('en-US', {
+                <span class="side"><%= articles[i].updatedAt.toLocaleDateString('en-US', {
                     day: "numeric",
                     month: "short",
                     year: "numeric",
                     hour: "numeric",
                     minute: "2-digit"
                 }) %></span>
+
+                <span class="side">
+                    <% if (articles[i].published) { %> 
+                        &#x2713
+                    <% } else { %>
+                        &#x10102
+                    <% } %>
+                </span>
 
                 <a href="/comments/<%= articles[i]._id %>">Comments</a>
 
