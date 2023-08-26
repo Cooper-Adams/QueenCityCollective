@@ -78,6 +78,17 @@ router.get('/adminArticles', checkAuthenticated, async (req, res) => {
     }
 })
 
+router.get('/adminArticles/:category', checkAuthenticated, async (req, res) => {
+    try {
+        const client = new MongoClient(process.env.MONGOLAB_URL)
+        const articles = await client.db("QCC-DB").collection("Articles").find({category: req.params.category}).sort({createdAt: -1}).toArray();
+        res.render('admin/adminArticles', {articles: articles})
+        await client.close()
+    } catch (e) {
+        console.error(e)
+    }
+})
+
 router.get('/edit/:id', checkAuthenticated, async (req, res) => 
 {
     try {
