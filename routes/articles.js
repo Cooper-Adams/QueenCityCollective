@@ -63,7 +63,7 @@ router.get('/allarticles/:category/Page:number', async(req, res) => {
         if (req.params.category == 'ALL' || req.params.category == 'all') { 
             articles = await client.db("QCC-DB").collection("Articles").find().skip(numDocs - skipCount).limit(2).sort({createdAt: -1}).toArray()
         } else { 
-            articles = await client.db("QCC-DB").collection("Articles").find({category: req.params.category}).find().skip(numDocs - skipCount).limit(2).sort({createdAt: -1}).toArray()
+            articles = await client.db("QCC-DB").collection("Articles").find({category: req.params.category}).skip(numDocs - skipCount).limit(2).sort({createdAt: -1}).toArray()
         }
 
         res.render('articles/AllArticles', { articles: articles, loggedIn: checkLoggedIn(req.user), category: req.params.category, pages: pageCounter, page: req.params.number})
