@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
     <script type="text/javascript" src="/functions.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen City Collective</title>
@@ -12,25 +13,34 @@
     <nav>
         <a href="/" rel="noopener noreferrer"><img src="/Logos/Q-Cropped-Panthers.png" class="home-icon" draggable="false"></a>
         
-        <ul class="nav-links"> 
-            <a href="/Panthers">Panthers</a>
-            <a href="/Hornets">Hornets</a>
-            <a href="/CharlotteFC">Charlotte FC</a>
+        <div class="nav-right">
+            <div class="box">
+                <form name="search">
+                    <input type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+                </form>
+                <i class="fas fa-search"></i>
+            </div>
 
-            <% if (loggedIn) { %>
-            <a href="javascript: document.logoutForm.submit()">LogOut</a>
-            <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
-                <button hidden class="log-out" type="submit"></button>
-            </form>
-            <% } else { %>
-                <a href="/log-reg">LogIn</a>
-            <% } %>
-        </ul>
-        
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+            <ul class="nav-links"> 
+                <a href="/Panthers">Panthers</a>
+                <a href="/Hornets">Hornets</a>
+                <a href="/CharlotteFC">Charlotte FC</a>
+    
+                <% if (loggedIn) { %>
+                <a href="javascript: document.logoutForm.submit()">LogOut</a>
+                <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
+                    <button hidden class="log-out" type="submit"></button>
+                </form>
+                <% } else { %>
+                    <a href="/log-reg">LogIn</a>
+                <% } %>
+            </ul>
+            
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
         </div>
     </nav>
 

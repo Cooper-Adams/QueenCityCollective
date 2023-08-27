@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
     <script type="text/javascript" src="/functions.js" defer></script>
     <title>All Articles</title>
 </head>
@@ -14,25 +15,34 @@
                      <%= "/Logos/Q-Cropped-Panthers.png" %> <% } %> class="home-icon" draggable="false">
         </a>
         
-        <ul class="nav-links">
-            <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/Panthers">Panthers</a>
-            <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/Hornets">Hornets</a>
-            <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/CharlotteFC">Charlotte FC</a>
-
-            <% if (loggedIn) { %>
-            <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="javascript: document.logoutForm.submit()">LogOut</a>
-            <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
-                <button hidden class="log-out" type="submit"></button>
-            </form>
-            <% } else { %>
-                <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/log-reg">LogIn</a>
-            <% } %>
-        </ul>
-        
-        <div class="burger <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+        <div class="nav-right">
+            <div class="box">
+                <form name="search">
+                    <input <% if (category == "Hornets") { %> style="color: #00788C" <% } %> type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+                </form>
+                <i <% if (category == "Hornets") { %> style="color: #1D1160" <% } %> class="fas fa-search"></i>
+            </div>
+    
+            <ul class="nav-links">
+                <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/Panthers">Panthers</a>
+                <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/Hornets">Hornets</a>
+                <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/CharlotteFC">Charlotte FC</a>
+    
+                <% if (loggedIn) { %>
+                <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="javascript: document.logoutForm.submit()">LogOut</a>
+                <form style="display: none;" name="logoutForm" action="/logout?_method=DELETE" method="POST" hidden>
+                    <button hidden class="log-out" type="submit"></button>
+                </form>
+                <% } else { %>
+                    <a <% if (category == "Hornets") { %> class= <%= "hornets" %><% } %> href="/log-reg">LogIn</a>
+                <% } %>
+            </ul>
+            
+            <div class="burger <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
         </div>
     </nav>
 
@@ -40,7 +50,7 @@
         <% for (let i = 0; i < articles.length; ++i) { %>
             <a class="la-article-link" href="../articles/<%= articles[i].slug %>">
                 <div class="la-box">
-                    <img class="la-image" src="/Logos/<%= articles[i].category %>.png" alt="Logo for <%= articles[i].category %>">
+                    <img class="la-image" src="/Logos/<%= articles[i].category %>.png" alt="Logo for the <%= articles[i].category %>">
                     <div class="la-top">
                         <h4 class="la-title"><%= articles[i].title %></h2>
                         <span style="color: darkgray;"><%= articles[i].createdAt.toLocaleDateString('en-US', {
