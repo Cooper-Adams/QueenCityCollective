@@ -1,5 +1,6 @@
-    <div class="pageCarousel">
-    <% if (page != 1 && page != 2 && page != 3 && page != pages && page != (pages - 1) && page != (pages - 2)) { %>
+<div class="pageCarousel">
+    <% if (articles.length <= 5) { %>
+    <% } else if (page != 1 && page != 2 && page != 3 && page != pages && page != (pages - 1) && page != (pages - 2)) { %>
         <a class="pc-link" href="/allarticles/<%= category %>/Page1">1</a>
         <span class="pc-spacer">...</span>
         <a class="pc-link" href="/allarticles/<%= category %>/Page<%= (parseInt(page) - 1) %>"><%= (parseInt(page) - 1) %></a>
