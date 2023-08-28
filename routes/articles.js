@@ -46,6 +46,29 @@ router.get('/CharlotteFC', async(req, res) => {
     }
 })
 
+router.post('/allarticles/search/Page:number', async(req, res) => {
+    try {
+        const client = new MongoClient(process.env.MONGOLAB_URL)
+        let skipCount
+        let articles
+        let numDocs = await client.db("QCC-DB").collection("Articles").countDocuments()
+        let pageCounter = Math.floor(numDocs / 2)
+        
+        if (req.params.number == 1) {
+            skipCount = numDocs
+        } else { 
+            skipCount = 2 * (parseInt(req.params.number) - 1) 
+        }
+
+        articles = await client.db("QCC-DB").collection("Articles").find({tags: {$regex: req.body.search, $options: 'i'}}).skip(numDocs - skipCount).limit(2).sort({createdAt: -1}).toArray()
+
+        res.render('articles/AllArticles', { articles: articles, loggedIn: checkLoggedIn(req.user), category: 'search', pages: pageCounter, page: req.params.number})
+        await client.close()
+    } catch (e) {
+        console.error(e)
+    }
+})
+
 router.get('/allarticles/:category/Page:number', async(req, res) => {
     try {
         const client = new MongoClient(process.env.MONGOLAB_URL)
