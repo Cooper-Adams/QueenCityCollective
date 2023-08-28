@@ -385,6 +385,10 @@ iframe {
   color: #0085CA;
 }
 
+.empty-articles {
+  text-align: center;
+}
+
 /* Footer */
 .footer {
   display: flex;
