@@ -17,8 +17,8 @@
         
         <div class="nav-right">
             <div class="box">
-                <form name="search">
-                    <input <% if (category == "Hornets") { %> style="color: #00788C" <% } %> type="text" class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+                <form name="search-bar" action="/allarticles/search/Page1" method="POST">
+                    <input <% if (category == "Hornets") { %> style="color: #00788C" <% } %> type="text" class="input" id="search" name="search" onmouseout="this.value = ''; this.blur();" required>
                 </form>
                 <i <% if (category == "Hornets") { %> style="color: #1D1160" <% } %> class="fas fa-search"></i>
             </div>
@@ -46,28 +46,32 @@
         </div>
     </nav>
 
-    <div class="long-article-wrapper">
-        <% for (let i = 0; i < articles.length; ++i) { %>
-            <a class="la-article-link" href="../articles/<%= articles[i].slug %>">
-                <div class="la-box">
-                    <img class="la-image" src="/Logos/<%= articles[i].category %>.png" alt="Logo for the <%= articles[i].category %>">
-                    <div class="la-top">
-                        <h4 class="la-title"><%= articles[i].title %></h2>
-                        <span style="color: darkgray;"><%= articles[i].createdAt.toLocaleDateString('en-US', {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric"
-                        }) %></span>
-                    </div>
-                    <div class="la-bottom">
-                        <p><%= articles[i].description %></p>
-                    </div>
-                </div>        
-            </a>
-        <% } %>
-    </div>
+    <% if (articles.length != 0) { %>
+        <div class="long-article-wrapper">
+            <% for (let i = 0; i < articles.length; ++i) { %>
+                <a class="la-article-link" href="../articles/<%= articles[i].slug %>">
+                    <div class="la-box">
+                        <img class="la-image" src="/Logos/<%= articles[i].category %>.png" alt="Logo for the <%= articles[i].category %>">
+                        <div class="la-top">
+                            <h4 class="la-title"><%= articles[i].title %></h2>
+                            <span style="color: darkgray;"><%= articles[i].createdAt.toLocaleDateString('en-US', {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric"
+                            }) %></span>
+                        </div>
+                        <div class="la-bottom">
+                            <p><%= articles[i].description %></p>
+                        </div>
+                    </div>        
+                </a>
+            <% } %>
+        </div>
 
-    <%- include('_pageCarousel') %>
+        <%- include('_pageCarousel') %>
+    <% } else { %>
+        <h3 class="empty-articles">No articles found.</h3>
+    <% } %>
 
     <footer <% if (articles.length > 2) { %> style="bottom: auto;" <% } %> class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
         <div class="big-img">
