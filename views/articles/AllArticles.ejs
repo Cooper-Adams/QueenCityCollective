@@ -73,7 +73,7 @@
         <h3 class="empty-articles">No articles found.</h3>
     <% } %>
 
-    <footer <% if (articles.length > 2) { %> style="bottom: auto;" <% } %> class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
+    <footer <% if (articles.length > 2) { %> style="bottom: auto;" <% } else { %> style="bottom: 0" <% } %> class="footer <% if (category == "Hornets") { %><%= "hornets" %><% } %>">
         <div class="big-img">
             <img <% if (category == "Hornets") { %> src="/Logos/QCC Hornets Transparent.png" <% } else { %> src="/Logos/QCC Transparent.png" <% } %> alt="Queen City Collective Logo" draggable="false">
         </div>
