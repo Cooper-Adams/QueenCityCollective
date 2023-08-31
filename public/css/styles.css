@@ -497,7 +497,7 @@ iframe {
   color: #1D1160 !important;
 }
 
-/* Media Queries for smaller screen sizes */
+/* Mobile formatting */
 @media only screen and (max-width: 1024px) {
   body {
     font-size: 14px;
@@ -505,7 +505,15 @@ iframe {
 
   nav {
     justify-content: space-between;
-    padding: 0 5vw;
+    padding: 0 20px;
+  }
+
+  .box {
+    margin-right: 2.5rem;
+  }
+
+  .box:hover input, .box input:focus {
+    width: 200px;
   }
 
   .nav-links {
@@ -571,19 +579,6 @@ iframe {
     flex-direction: column;
     gap: 20px;
   }
-}
-
-/* Mobile formatting */
-@media only screen and (max-width: 640px){
-  nav {
-    justify-content: space-between;
-    padding: 0 5vw;
-  }
-}
-
-.nav-active {
-  transform: translateX(0);
-  background-color: black;
 }
 
 @media only screen and (max-width: 460px){
