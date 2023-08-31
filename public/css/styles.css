@@ -181,6 +181,7 @@ nav img {
   font-size: 3rem;
   padding: 0;
   cursor: pointer;
+  transition: .25s all ease-in-out;
 }
 
 #slide-arrow-prev {
@@ -193,6 +194,11 @@ nav img {
   right: 0;
   padding-left: 0.75rem;
   border-radius: 2rem 0 0 2rem;
+}
+
+.slide-arrow:hover {
+  background-color: #333;
+  color: #eeeeee;
 }
 
 .article-info-box {
