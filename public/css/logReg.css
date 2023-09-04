@@ -28,6 +28,7 @@ body {
 }
 
 h1 {
+	justify-self: flex-start;
 	font-weight: bold;
 	margin: 0;
 }
@@ -60,17 +61,15 @@ a {
 }
 
 button {
+	width: 100%;
     cursor: pointer;
-    width: 150px;
-	border-radius: 20px;
-	border: 1px solid #222;
-	background-color: #0085CA;
-	color: #FFFFFF;
-	font-size: 12px;
+	border: none;
+	background: none;
+	color: black;
+	font-size: 14px;
 	font-weight: bold;
-	padding: 12px 45px;
+	padding: 15px 35px;
 	letter-spacing: 1px;
-	text-transform: uppercase;
 	transition: transform 80ms ease-in;
 }
 
@@ -78,13 +77,10 @@ button:active {
 	transform: scale(0.95);
 }
 
-button:focus {
-	outline: none;
-}
-
 button.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
+	color: white;
 }
 
 .fa {
@@ -266,6 +262,20 @@ input {
 	visibility: hidden;
 	opacity: 0;
 	transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.pw-toggle {
+	position: absolute;
+	width: min-content;
+	height: min-content;
+	margin: 20px 5px;
+	padding: 0;
+	right: 0;
+	cursor: pointer;
+}
+
+.pw-toggle:hover {
+	color: #0085CA;
 }
 
 @media only screen and (max-width: 1024px) {
