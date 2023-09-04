@@ -46,7 +46,6 @@ app.use((req, res, next) => {
 })
 
 app.delete('/logout', (req, res, next) => {
-    console.log("HELLO")
     req.logOut((err) => {
         if (err) {
             return next(err)
