@@ -6,9 +6,13 @@
 	<title>Login or Register</title>
 </head>
 
-<% if (messages.error) { %>
+<% if (messages.error || messages.success) { %>
 	<div class="error-div">
-		<h4 class="flash"> <%= messages.error %> </h4>
+		<% if (messages.success) { %>
+			<h4 class="flash"> <%= messages.success %> </h4>
+		<% } else if (messages.error) { %>
+			<h4 class="flash"> <%= messages.error %> </h4>
+		<% } %>
 	</div>
 <% } %>
 
@@ -23,12 +27,18 @@
 				<a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
 			</div>
 			
-			<input type="text" placeholder="First Name" name="firstName" required value="<%= user.firstName %>">
-            <input type="text" placeholder="Last Name" name="lastName" required value="<%= user.lastName %>">
-			<input type="email" placeholder="Email" name="email" required value="<%= user.email %>">
-			<input type="password" placeholder="Password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" required>
-			<input type="password" placeholder="Confirm Password" name="confirm" required>
-			<p class="pass-req">Passwords should include an Uppercase and Lowercase letter, a number, and a special character while being at least 8 characters.</p>
+			<input type="text" placeholder="First Name" name="firstName" autocomplete="off" required value="<%= user.firstName %>">
+            <input type="text" placeholder="Last Name" name="lastName" autocomplete="off" required value="<%= user.lastName %>">
+			<input type="email" placeholder="Email" name="email" autocomplete="off" required value="<%= user.email %>">
+			<p class="password-p">
+				<input class="input-password" type="password" placeholder="Password" name="password" autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+				<i class="fa fa-eye pw-toggle" id="pw-toggle" aria-hidden="true"></i>
+			</p>
+			<p class="password-p">
+				<input class="input-password" type="password" placeholder="Confirm Password" name="confirm" autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+				<i class="fa fa-eye pw-toggle" id="pw-toggle" aria-hidden="true"></i>
+			</p>
+			<p class="pass-req">Passwords should include an uppercase and lowercase letter, a number, and be at least 8 characters long.</p>
 			<button>Sign Up</button>
 		</form>
 	</div>
