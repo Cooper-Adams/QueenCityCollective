@@ -2,7 +2,7 @@ const signUpButton = document.getElementById('signUp')
 const signInButton = document.getElementById('signIn')
 const container = document.getElementById('container')
 const errorDiv = document.querySelector('.error-div')
-const pwToggle = document.getElementById('pw-toggle')
+const pwToggle = document.getElementsByClassName('pw-toggle')
 
 if (signUpButton) {
 	signUpButton.addEventListener('click', () => {
@@ -23,15 +23,13 @@ if (errorDiv) {
 }
 
 if (pwToggle) {
-	pwToggle.addEventListener("click", () => {
-		const input = document.querySelector('input')
-
-		console.log(input)
-	
-		if (input.type == 'password') {
-			input.type = 'text'
-		} else {
-			input.type = 'password'
-		}
-	})
+	Array.from(pwToggle).forEach(toggle => {
+		toggle.addEventListener("click", () => {
+			if (toggle.previousElementSibling.type == 'password') {
+				toggle.previousElementSibling.type = 'text'
+			} else {
+				toggle.previousElementSibling.type = 'password'
+			}
+		})
+	})	
 }
