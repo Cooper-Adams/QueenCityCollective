@@ -109,6 +109,7 @@ form {
 input {
 	background-color: #eee;
 	border: none;
+	border-radius: 5px;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
@@ -264,6 +265,21 @@ input {
 	transition: visibility 0s 2s, opacity 2s linear;
 }
 
+.reset-container {
+	width: 40%;
+}
+
+.reset-container form {
+	padding: 2rem;
+}
+
+.reset-container, .reset-container form {
+	border-radius: 15px;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.25), 
+			0 10px 10px rgba(0,0,0,0.22);
+	border-collapse: collapse;
+}
+
 .pw-toggle {
 	position: absolute;
 	width: min-content;
@@ -278,6 +294,18 @@ input {
 	color: #0085CA;
 }
 
+.input-password:invalid {
+	color: red;
+}
+
+.password-p {
+	display: flex; 
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
 @media only screen and (max-width: 1024px) {
 	body {
 		margin: 0px 0 0px;
@@ -290,5 +318,14 @@ input {
 	.container {
 		min-height: 100vh;
 		border-radius: 0px;
+	}
+
+	.reset-container {
+		width: 100%;
+		min-height: 100vh;
+	}
+
+	.reset-container, .reset-container form {
+		border-radius: 0;
 	}
 }
