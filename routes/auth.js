@@ -44,7 +44,10 @@ router.post('/request-reset', checkNotAuthenticated, async (req, res) => {
     }
 
     await client.close()
-    res.redirect('/forgot-password')
+
+    req.flash('success', 'Password reset link sent!')
+
+    res.redirect('/log-reg')
 })
 
 router.get('/passwordReset', checkNotAuthenticated, async (req, res) => {
@@ -72,7 +75,7 @@ router.post('/reset-password', checkNotAuthenticated, async (req, res) => {
         await client.db("QCC-DB").collection("Token").findOneAndDelete({ userId: req.body.id })
         await client.close()
     
-        req.flash('error', "Password succesfully reset.")
+        req.flash('success', "Password succesfully reset.")
     
         res.redirect('/log-reg')
     } catch (error) {
